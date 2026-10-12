@@ -1,0 +1,2751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DSA BLUEPRINT: 7 PILLARS OF ALGORITHMIC MASTERY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <style>
+        :root {
+            --primary: #0a2540;
+            --accent: #0070f3;
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+            --code-bg: #f8fafc;
+            --code-border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 16mm 14mm 16mm 14mm;
+        }
+
+        @page :first {
+            margin: 0 !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 20px;
+            background: #ffffff;
+        }
+
+        /* Print Specific Rules */
+        @media print {
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                font-size: 10pt;
+                line-height: 1.55;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .cover-page {
+                page-break-before: avoid !important;
+                break-before: avoid !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+            .cover-page img {
+                width: 100vw !important;
+                height: 100vh !important;
+                max-width: none !important;
+                max-height: none !important;
+                object-fit: cover !important;
+                display: block !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+            }
+            .chapter-section {
+                page-break-before: always;
+                break-before: page;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+            pre, blockquote {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+            table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+            tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            p, li {
+                orphans: 3;
+                widows: 3;
+            }
+            pre {
+                overflow: visible !important;
+                white-space: pre-wrap !important;
+                word-break: break-word !important;
+                border: 1px solid #cbd5e1 !important;
+                background-color: #f8fafc !important;
+                color: #0f172a !important;
+            }
+        }
+
+        /* Top Bar */
+        .top-navbar {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .brand-title {
+            font-weight: 700;
+            font-size: 14.5px;
+            letter-spacing: 0.5px;
+        }
+        .brand-sub {
+            opacity: 0.7;
+            font-size: 12.5px;
+            margin-left: 10px;
+        }
+        .action-btn {
+            background: #00b4d8;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: #0096c7;
+            transform: translateY(-1px);
+        }
+
+        .instructions-banner {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #166534;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .instructions-banner strong {
+            color: #14532d;
+        }
+
+        /* Cover Display Web Preview */
+        .cover-page {
+            text-align: center;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        .cover-page img {
+            max-width: 600px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+        }
+
+        /* Typography */
+        h1 {
+            color: #0f172a;
+            font-size: 1.85rem;
+            font-weight: 800;
+            margin-top: 18px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2.5px solid #00b4d8;
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            color: #0f4c81;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--border);
+        }
+        h3 {
+            color: #0f172a;
+            font-size: 1.12rem;
+            font-weight: 700;
+            margin-top: 14px;
+            margin-bottom: 6px;
+        }
+        p, li {
+            color: #334155;
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin: 6px 0;
+        }
+        ul, ol {
+            padding-left: 22px;
+            margin: 6px 0;
+        }
+
+        /* Author and Copyright Boxes on Page 2 */
+        .author-box, .copyright-box, .note-box {
+            margin-bottom: 16px;
+            padding: 12px 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .author-box h3, .copyright-box h3, .note-box h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #0f4c81;
+        }
+
+        /* Math Span */
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f5f9;
+            color: #0369a1;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            margin: 12px 0;
+            padding: 10px 18px;
+            background: #f0f9ff;
+            border-left: 4px solid #00b4d8;
+            border-radius: 0 6px 6px 0;
+            color: #0369a1;
+            font-style: italic;
+            font-size: 14px;
+        }
+        blockquote p {
+            margin: 0;
+            color: inherit;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            padding: 12px 16px !important;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.48;
+            margin: 12px 0;
+            overflow-x: auto;
+            border: 1px solid #cbd5e1;
+        }
+        pre code {
+            background: transparent !important;
+            color: inherit !important;
+            padding: 0;
+            font-size: inherit;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Beautiful Compact Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 12.5px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #cbd5e1;
+        }
+        th, td {
+            padding: 6px 10px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        th {
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            border-bottom: 2px solid #cbd5e1;
+        }
+        tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-navbar no-print">
+        <div>
+            <span class="brand-title">📘 THE DSA BLUEPRINT</span>
+            <span class="brand-sub">By Vaibhav Pandey • Modern C++ Edition</span>
+        </div>
+        <button class="action-btn" onclick="window.print()">🖨️ Export High-Res PDF</button>
+    </div>
+
+    <div class="instructions-banner no-print">
+        💡 <strong>Pro-Tip for Clean PDF Export:</strong> Print dialog khulte hi <strong>"More settings"</strong> par click karein aur <strong>"Headers and footers"</strong> ko <u>UNCHECK</u> (band) kar dein. Isse page ke upar ka time/date aur niche ka file location URL completely hat jayega!
+    </div>
+
+    <div class="cover-page">
+        <img src="assets/book_cover_fullpage.jpg" alt="THE DSA BLUEPRINT Full Page Cover">
+    </div>
+
+    
+            <section class="chapter-section">
+                <h1 id="about-the-author-publication-details">About the Author &amp; Publication Details</h1>
+<div class="author-box">
+
+### 👨‍💻 About the Author
+**Vaibhav Pandey** is a Computer Science Engineer and AI/Machine Learning Researcher specializing in high-performance algorithms, system design, and large-scale information retrieval. 
+
+With deep experience tackling competitive programming, core data structure paradigms, and technical interview frameworks, Vaibhav authored **The DSA Blueprint: 7 Pillars of Algorithmic Mastery** to eliminate the noise of 500-question grind lists and provide candidates with actionable mental models and clean modern C++ patterns.
+
+</div>
+
+<div class="copyright-box">
+
+### 📜 Copyright & Licensing
+**The DSA Blueprint: 7 Pillars of Algorithmic Mastery in C++** • *First Edition (2026)*  
+Copyright © 2026 by **Vaibhav Pandey**. All rights reserved.
+
+No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the author, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law.
+
+</div>
+
+<div class="note-box">
+
+### 🎯 Author's Note to Readers
+> *"Interviews test whether you can recognize underlying mathematical and algorithmic structures in unfamiliar problems. Memorization will fail you under pressure; pattern recognition never will. Master the fundamentals, trace your edge cases, and think out loud."*  
+> — **Vaibhav Pandey**
+
+</div>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="table-of-contents">Table of Contents</h1>
+<hr />
+<table>
+<thead>
+<tr>
+<th>Chapter</th>
+<th>Title / Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Front Matter</strong></td>
+<td><a href="#about-the-author--publication-details">About the Author &amp; Publication Details</a></td>
+</tr>
+<tr>
+<td><strong>Module 00</strong></td>
+<td><a href="#module-00-the-45-minute-interview-mental-model">The 45-Minute Interview Mental Model</a></td>
+</tr>
+<tr>
+<td><strong>Module 01</strong></td>
+<td><a href="#module-01-complexity-analysis--the-decision-matrix">Complexity Analysis &amp; The Decision Matrix</a></td>
+</tr>
+<tr>
+<td><strong>Module 02</strong></td>
+<td><a href="#module-02-two-pointers--sliding-window-mastery">Two Pointers &amp; Sliding Window Mastery</a></td>
+</tr>
+<tr>
+<td><strong>Module 03</strong></td>
+<td><a href="#module-03-prefix-sums--difference-arrays">Prefix Sums &amp; Difference Arrays</a></td>
+</tr>
+<tr>
+<td><strong>Module 04</strong></td>
+<td><a href="#module-04-fast-searching--modified-binary-search">Fast Searching &amp; Modified Binary Search</a></td>
+</tr>
+<tr>
+<td><strong>Module 05</strong></td>
+<td><a href="#module-05-monotonic-stack--deque">Monotonic Stack &amp; Deque</a></td>
+</tr>
+<tr>
+<td><strong>Module 06</strong></td>
+<td><a href="#module-06-linked-lists---the-pointer-mechanics">Linked Lists - The Pointer Mechanics</a></td>
+</tr>
+<tr>
+<td><strong>Module 07</strong></td>
+<td><a href="#module-07-binary-trees--bst-patterns">Binary Trees &amp; BST Patterns</a></td>
+</tr>
+<tr>
+<td><strong>Module 08</strong></td>
+<td><a href="#module-08-priority-queues--heaps">Priority Queues &amp; Heaps</a></td>
+</tr>
+<tr>
+<td><strong>Module 09</strong></td>
+<td><a href="#module-09-graph-traversal--connectivity">Graph Traversal &amp; Connectivity</a></td>
+</tr>
+<tr>
+<td><strong>Module 10</strong></td>
+<td><a href="#module-10-shortest-paths--minimum-spanning-tree">Shortest Paths &amp; Minimum Spanning Tree</a></td>
+</tr>
+<tr>
+<td><strong>Module 11</strong></td>
+<td><a href="#module-11-dynamic-programming---the-human-way">Dynamic Programming - The Human Way</a></td>
+</tr>
+<tr>
+<td><strong>Module 12</strong></td>
+<td><a href="#module-12-backtracking--state-space-search">Backtracking &amp; State Space Search</a></td>
+</tr>
+<tr>
+<td><strong>Module 13</strong></td>
+<td><a href="#module-13-bit-manipulation-hacks">Bit Manipulation Hacks</a></td>
+</tr>
+<tr>
+<td><strong>Module 14</strong></td>
+<td><a href="#bonus-48-hour-emergency-cheat-sheet">48-Hour Emergency Cheat Sheet</a></td>
+</tr>
+</tbody>
+</table>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-00-the-45-minute-interview-mental-model">Module 00: The 45-Minute Interview Mental Model</h1>
+<blockquote>
+<p><em>"An interview is not a solo coding contest. It is a collaborative technical presentation where communication is graded just as harshly as your algorithmic correctness."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-45-minute-coding-round-breakdown">1. The 45-Minute Coding Round Breakdown</h2>
+<p>Most candidates fail coding interviews not because they couldn't write code, but because they <strong>mismanaged their time</strong>. Here is the exact time allocation used by candidates who receive FAANG offers:</p>
+<pre><code>[00:00 - 05:00]  Clarification, Edge Cases &amp; Constraints (Understand)
+[05:00 - 12:00]  Brainstorming &amp; Solution Pitching (Match &amp; Plan)
+[12:00 - 30:00]  Writing Clean, Modular C++ Code (Implement)
+[30:00 - 38:00]  Dry Run with Edge Cases &amp; Bug Catching (Review)
+[38:00 - 45:00]  Complexity Analysis &amp; Reverse Questions (Evaluate)
+</code></pre>
+<hr />
+<h2 id="2-the-umpire-framework">2. The UMPIRE Framework</h2>
+<p>Whenever an interviewer hands you a problem statement, <strong>DO NOT START CODING IMMEDIATELY</strong>. Jumping straight to code is the single fastest way to receive a rejection.</p>
+<p>Use the <strong>UMPIRE</strong> framework:</p>
+<h3 id="u-understand-minutes-05">U — Understand (Minutes 0–5)</h3>
+<ul>
+<li>Clarify assumptions immediately:</li>
+<li><em>"Can the input array contain negative numbers or duplicates?"</em></li>
+<li><em>"What are the maximum bounds of <span class="math">N</span>? Can the array be empty or have only one element?"</em></li>
+<li><em>"Should I return an in-place result or is extra memory permitted?"</em></li>
+<li>Restate the problem in your own words to confirm alignment.</li>
+</ul>
+<h3 id="m-match-minutes-58">M — Match (Minutes 5–8)</h3>
+<ul>
+<li>Connect problem traits to standard patterns:</li>
+<li><em>Sorted array with search target?</em> <span class="math">→</span> <strong>Binary Search</strong></li>
+<li><em>Continuous subarray with max/min constraints?</em> <span class="math">→</span> <strong>Sliding Window</strong></li>
+<li><em>Top K elements / running median?</em> <span class="math">→</span> <strong>Heap / Priority Queue</strong></li>
+<li><em>Tree / shortest path in unweighted graph?</em> <span class="math">→</span> <strong>BFS</strong></li>
+</ul>
+<h3 id="p-plan-minutes-812">P — Plan (Minutes 8–12)</h3>
+<ul>
+<li>Speak your logic in plain English before writing a single line of C++.</li>
+<li>Propose the <strong>Brute Force first</strong>: <blockquote>
+<p><em>"A naive solution would take <span class="math">O(N^2)</span> by checking all pairs. We can do better by caching intermediate states in an <code>unordered_map</code> to bring it down to <span class="math">O(N)</span>."</em></p>
+</blockquote>
+</li>
+<li><strong>Wait for interviewer confirmation</strong> before typing:<blockquote>
+<p><em>"Does this approach sound good to you, or would you like me to explore another angle before I write the code?"</em></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="i-implement-minutes-1230">I — Implement (Minutes 12–30)</h3>
+<ul>
+<li>Write modular, idiomatic modern C++.</li>
+<li>Use meaningful variable names (<code>left</code>, <code>right</code>, <code>curr_sum</code> instead of single letters like <code>i</code>, <code>j</code>, <code>s</code>).</li>
+<li>Avoid premature optimization if it hurts readability.</li>
+</ul>
+<h3 id="r-review-minutes-3038">R — Review (Minutes 30–38)</h3>
+<ul>
+<li><strong>Trace the code line-by-line</strong> with a small test input (e.g., <code>arr = [2, 7, 11, 15], target = 9</code>).</li>
+<li>Act as the compiler. Track variables explicitly:<br />
+<code>Step 1: left = 0 (val = 2), right = 3 (val = 15), sum = 17 &gt; target -&gt; right--
+  Step 2: left = 0 (val = 2), right = 2 (val = 11), sum = 13 &gt; target -&gt; right--
+  Step 3: left = 0 (val = 2), right = 1 (val = 7), sum = 9 == target -&gt; match found!</code></li>
+<li>Check edge cases: empty list, single element, negative numbers, maximum integer overflow (<code>INT_MAX</code>).</li>
+</ul>
+<h3 id="e-evaluate-minutes-3845">E — Evaluate (Minutes 38–45)</h3>
+<ul>
+<li>State the Time and Space complexity formally:<blockquote>
+<p><em>"Time Complexity: <span class="math">O(N log N)</span> due to sorting. Space Complexity: <span class="math">O(1)</span> auxiliary memory since we modify pointers in-place."</em></p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h2 id="3-what-to-say-out-loud-when-you-get-stuck">3. What to Say Out Loud When You Get Stuck</h2>
+<p>Silence is an interview killer. Interviewers want to know <em>how you think</em>. If you hit a mental block, use these exact battle-tested phrases:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Don't Say</th>
+<th>Say This Instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You have no clue where to start</td>
+<td><em>"I don't know how to solve this."</em></td>
+<td><em>"Let's start by walking through a concrete example step-by-step to detect patterns in how the output changes."</em></td>
+</tr>
+<tr>
+<td>Your brute force is too slow</td>
+<td>(Awkward 3-minute silence)</td>
+<td><em>"The bottleneck right now is searching repeatedly in <span class="math">O(N)</span>. I'm wondering if pre-sorting or indexing with a hash table could turn those lookups into <span class="math">O(1)</span>."</em></td>
+</tr>
+<tr>
+<td>You spotted a bug in your code</td>
+<td><em>"Oops, my code is broken."</em></td>
+<td><em>"Looking at step 4, if the input is an empty array, this line will cause an out-of-bounds error. Let me add a guard condition at the top."</em></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-modern-c-coding-standards-for-interviews">4. Modern C++ Coding Standards for Interviews</h2>
+<p>Interviewers at top tech firms appreciate clean, modern C++ conventions:</p>
+<h3 id="1-pass-big-containers-by-const-reference">1. Pass Big Containers by Const Reference</h3>
+<pre><code class="language-cpp">// ❌ BAD: Copies the entire vector into memory (O(N) time and memory overhead)
+int calculateSum(vector&lt;int&gt; nums) { ... }
+
+// ✅ GOOD: Zero-copy, read-only
+int calculateSum(const vector&lt;int&gt;&amp; nums) { ... }
+</code></pre>
+<h3 id="2-guard-against-integer-overflow">2. Guard Against Integer Overflow</h3>
+<p>Whenever doing additions or multiplications of array elements, use <code>long long</code>:</p>
+<pre><code class="language-cpp">// ❌ BAD: Can overflow when left + right &gt; INT_MAX
+int mid = (left + right) / 2;
+
+// ✅ GOOD: Prevents overflow
+int mid = left + (right - left) / 2;
+</code></pre>
+<h3 id="3-clear-helper-functions-over-giant-blocks">3. Clear Helper Functions Over Giant Blocks</h3>
+<pre><code class="language-cpp">// ✅ GOOD: Self-explanatory modularity
+bool isValidState(int r, int c, int n, int m) {
+    return (r &gt;= 0 &amp;&amp; r &lt; n &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; m);
+}
+</code></pre>
+<hr />
+<h2 id="quick-self-check-before-every-problem">💡 Quick Self-Check Before Every Problem</h2>
+<p>Ask yourself these 3 questions every time:<br />
+1. Did I ask about constraints on <span class="math">N</span>?<br />
+2. Did I verify if the input can be empty or negative?<br />
+3. Did I verbally get the interviewer's nod before starting to code?</p>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-01-complexity-analysis-the-decision-matrix">Module 01: Complexity Analysis &amp; The Decision Matrix</h1>
+<blockquote>
+<p><em>"The constraints given in the problem statement are not just rules—they are the biggest spoiler for what algorithm the interviewer expects you to write."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-constraint-to-algorithm-cheat-sheet">1. The Constraint-to-Algorithm Cheat Sheet</h2>
+<p>Modern coding platforms (LeetCode, Codeforces, HackerRank, InterviewBit) typically allow <strong><span class="math">≈ 10^8</span> operations per second</strong> in C++.</p>
+<p>By looking at <span class="math">N</span> (the size of the input), you can eliminate 90% of approaches in the first 30 seconds:</p>
+<table>
+<thead>
+<tr>
+<th>Constraints (<span class="math">N</span>)</th>
+<th>Allowed Time Complexity</th>
+<th>Expected Algorithm / Paradigm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math">N ≤ 10</span></td>
+<td><span class="math">O(N!)</span> or <span class="math">O(N^2 · 2^N)</span></td>
+<td>Permutations, Travelling Salesman, Exhaustive Search</td>
+</tr>
+<tr>
+<td><span class="math">N ≤ 20</span></td>
+<td><span class="math">O(2^N)</span></td>
+<td>Subsets, Bitmask DP, Exponential Backtracking</td>
+</tr>
+<tr>
+<td><span class="math">N ≤ 100</span></td>
+<td><span class="math">O(N^4)</span> or <span class="math">O(N^3)</span></td>
+<td>2D/3D Dynamic Programming, Floyd-Warshall (<span class="math">O(V^3)</span>)</td>
+</tr>
+<tr>
+<td><span class="math">N ≤ 500</span></td>
+<td><span class="math">O(N^3)</span></td>
+<td>Interval DP (e.g., Matrix Chain Multiplication)</td>
+</tr>
+<tr>
+<td><span class="math">N ≤ 5,000</span></td>
+<td><span class="math">O(N^2)</span></td>
+<td>Double nested loops, 2D Grid Traversal, Brute-force Pair checking</td>
+</tr>
+<tr>
+<td><span class="math">N ≤ 10^5</span> to <span class="math">10^6</span></td>
+<td><span class="math">O(N log N)</span> or <span class="math">O(N)</span></td>
+<td>Sorting, Binary Search, Sliding Window, Two Pointers, Monotonic Stack, BFS/DFS, Heaps, DSU</td>
+</tr>
+<tr>
+<td><span class="math">N ≥ 10^8</span> or <span class="math">10^9</span></td>
+<td><span class="math">O(log N)</span> or <span class="math">O(1)</span></td>
+<td>Binary Search on Answer, Bit Manipulation, Math formulas, Matrix Exponentiation</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Interview Pro-Tip:</strong> If the interviewer gives you <span class="math">N = 10^5</span>, immediately mention: <em>"Since <span class="math">N = 10^5</span>, an <span class="math">O(N^2)</span> solution will result in Time Limit Exceeded (TLE). We must aim for an <span class="math">O(N)</span> or <span class="math">O(N log N)</span> algorithm."</em> This instantly demonstrates seniority.</p>
+</blockquote>
+<hr />
+<h2 id="2-c-stl-container-complexity-reference">2. C++ STL Container Complexity Reference</h2>
+<p>Memorize this table. Interviewers frequently ask about internal implementations:</p>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Underlying Structure</th>
+<th>Access</th>
+<th>Search</th>
+<th>Insertion</th>
+<th>Deletion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::vector</code></td>
+<td>Dynamic Array</td>
+<td><span class="math">O(1)</span></td>
+<td><span class="math">O(N)</span></td>
+<td>Amortized <span class="math">O(1)</span> (End)<br><span class="math">O(N)</span> (Middle/Front)</td>
+<td><span class="math">O(1)</span> (End)<br><span class="math">O(N)</span> (Middle/Front)</td>
+</tr>
+<tr>
+<td><code>std::deque</code></td>
+<td>Chunked Array Map</td>
+<td><span class="math">O(1)</span></td>
+<td><span class="math">O(N)</span></td>
+<td><span class="math">O(1)</span> (Front &amp; End)</td>
+<td><span class="math">O(1)</span> (Front &amp; End)</td>
+</tr>
+<tr>
+<td><code>std::list</code></td>
+<td>Doubly Linked List</td>
+<td><span class="math">O(N)</span></td>
+<td><span class="math">O(N)</span></td>
+<td><span class="math">O(1)</span> (Given iterator)</td>
+<td><span class="math">O(1)</span> (Given iterator)</td>
+</tr>
+<tr>
+<td><code>std::set</code> / <code>std::map</code></td>
+<td>Red-Black Tree (Self-balancing BST)</td>
+<td>N/A (Key lookup: <span class="math">O(log N)</span>)</td>
+<td><span class="math">O(log N)</span></td>
+<td><span class="math">O(log N)</span></td>
+<td><span class="math">O(log N)</span></td>
+</tr>
+<tr>
+<td><code>std::unordered_set</code> / <code>unordered_map</code></td>
+<td>Hash Table with Buckets</td>
+<td>N/A (Key lookup: Average <span class="math">O(1)</span>)</td>
+<td>Average <span class="math">O(1)</span><br>Worst <span class="math">O(N)</span></td>
+<td>Average <span class="math">O(1)</span><br>Worst <span class="math">O(N)</span></td>
+<td>Average <span class="math">O(1)</span><br>Worst <span class="math">O(N)</span></td>
+</tr>
+<tr>
+<td><code>std::priority_queue</code></td>
+<td>Max Binary Heap</td>
+<td><span class="math">O(1)</span> (<code>top()</code>)</td>
+<td>N/A</td>
+<td><span class="math">O(log N)</span> (<code>push()</code>)</td>
+<td><span class="math">O(log N)</span> (<code>pop()</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-hidden-c-interview-traps-that-waste-hours">3. Hidden C++ Interview Traps (That Waste Hours)</h2>
+<h3 id="trap-1-inefficient-string-concatenation-in-loops">Trap 1: Inefficient String Concatenation in Loops</h3>
+<pre><code class="language-cpp">// ❌ WRONG: Creates a new string copy on every iteration -&gt; O(N^2) total time!
+string s = &quot;&quot;;
+for (int i = 0; i &lt; n; i++) {
+    s = s + 'a';
+}
+
+// ✅ CORRECT: In-place append in amortized O(1) -&gt; O(N) total time
+string s = &quot;&quot;;
+s.reserve(n); // Optional optimization
+for (int i = 0; i &lt; n; i++) {
+    s.push_back('a'); // or s += 'a';
+}
+</code></pre>
+<h3 id="trap-2-stdvectorerase-inside-a-loop">Trap 2: <code>std::vector::erase()</code> inside a loop</h3>
+<p>Deleting elements from the front or middle of a <code>vector</code> shifts all subsequent elements to the left, turning an <span class="math">O(N)</span> loop into <span class="math">O(N^2)</span>.<br />
+- If you need front popping, use <strong><code>std::deque</code></strong> or maintain a <strong>read pointer index</strong>.</p>
+<h3 id="trap-3-unordered_map-hash-collision-dos-attacks">Trap 3: <code>unordered_map</code> Hash Collision DOS Attacks</h3>
+<p>In competitive platforms and strict test cases, anti-hash tests cause default <code>std::hash</code> to degrade to <span class="math">O(N^2)</span>. If you observe unexpected TLE with <code>unordered_map</code>, switch to <strong><code>std::map</code></strong> (guaranteed <span class="math">O(log N)</span>) or a custom splitmix64 hash function.</p>
+<h3 id="trap-4-recursive-stack-overflow">Trap 4: Recursive Stack Overflow</h3>
+<p>C++ call stack typically has a limit around 8MB on standard machines:<br />
+- Recursion depth <span class="math">&gt; 10^5</span> can trigger <code>Segmentation Fault</code> (SIGSEGV).<br />
+- If depth is large, convert recursive DFS to <strong>iterative DFS using <code>std::stack</code></strong>.</p>
+<hr />
+<h2 id="4-the-algorithm-decision-matrix-problem-type-pattern">4. The Algorithm Decision Matrix (Problem Type <span class="math">→</span> Pattern)</h2>
+<p>Use this quick mental flowchart when reading a problem:</p>
+<pre><code>Is the input array sorted or can it be sorted?
+│
+├── YES ───► Searching target? ───────────────► Binary Search (O(log N))
+│       ───► Finding pairs/triplets? ────────► Two Pointers (O(N))
+│
+└── NO ────► Asking for continuous subarray? ──► Sliding Window / Prefix Sum
+        ───► Asking for Top K elements? ──────► Heap / Priority Queue
+        ───► Next greater/smaller element? ───► Monotonic Stack
+        ───► Shortest path (unweighted)? ────► BFS
+        ───► Shortest path (weighted)? ──────► Dijkstra's Algorithm
+        ───► Optimal choices / Subproblems? ─► Dynamic Programming
+</code></pre>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-02-two-pointers-sliding-window-mastery">Module 02: Two Pointers &amp; Sliding Window Mastery</h1>
+<blockquote>
+<p><em>"When brute force requires nested loops to inspect subarrays or pairs, Two Pointers and Sliding Window reduce <span class="math">O(N^2)</span> to <span class="math">O(N)</span> by maintaining contiguous state dynamically."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-pattern-1-opposite-direction-two-pointers">1. Pattern 1: Opposite-Direction Two Pointers</h2>
+<h3 id="when-to-use">When to Use:</h3>
+<ul>
+<li>The array is <strong>sorted</strong> (or can be sorted without destroying index utility).</li>
+<li>Problem asks to find a pair, triplet, or partition meeting a criteria (e.g., target sum, container area).</li>
+</ul>
+<h3 id="universal-c-template">Universal C++ Template:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+void twoPointersOpposite(vector&lt;int&gt;&amp; arr, int target) {
+    int left = 0;
+    int right = arr.size() - 1;
+
+    while (left &lt; right) {
+        int current_sum = arr[left] + arr[right];
+
+        if (current_sum == target) {
+            // Process result (e.g., return {left, right})
+            left++;
+            right--;
+        } else if (current_sum &lt; target) {
+            left++; // Need a larger value
+        } else {
+            right--; // Need a smaller value
+        }
+    }
+}
+</code></pre>
+<h3 id="high-yield-classic-container-with-most-water">High-Yield Classic: Container With Most Water</h3>
+<pre><code class="language-cpp">// LeetCode 11: Container With Most Water
+// Time: O(N), Space: O(1)
+int maxArea(const vector&lt;int&gt;&amp; height) {
+    int left = 0, right = height.size() - 1;
+    int max_water = 0;
+
+    while (left &lt; right) {
+        int width = right - left;
+        int current_height = min(height[left], height[right]);
+        max_water = max(max_water, width * current_height);
+
+        // Always advance the pointer pointing to the shorter wall
+        if (height[left] &lt; height[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return max_water;
+}
+</code></pre>
+<hr />
+<h2 id="2-pattern-2-fast-slow-pointers-floyds-tortoise-and-hare">2. Pattern 2: Fast &amp; Slow Pointers (Floyd's Tortoise and Hare)</h2>
+<h3 id="when-to-use_1">When to Use:</h3>
+<ul>
+<li>Detecting <strong>cycles</strong> in linked lists or array sequences (value as next index).</li>
+<li>Finding the middle element of a singly linked list in a single pass.</li>
+</ul>
+<h3 id="universal-c-template_1">Universal C++ Template:</h3>
+<pre><code class="language-cpp">struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+bool hasCycle(ListNode *head) {
+    if (!head || !head-&gt;next) return false;
+
+    ListNode *slow = head;
+    ListNode *fast = head;
+
+    while (fast != nullptr &amp;&amp; fast-&gt;next != nullptr) {
+        slow = slow-&gt;next;          // Moves 1 step
+        fast = fast-&gt;next-&gt;next;    // Moves 2 steps
+
+        if (slow == fast) {
+            return true; // Cycle detected
+        }
+    }
+    return false; // Reached end of list
+}
+</code></pre>
+<hr />
+<h2 id="3-pattern-3-fixed-size-sliding-window">3. Pattern 3: Fixed-Size Sliding Window</h2>
+<h3 id="when-to-use_2">When to Use:</h3>
+<ul>
+<li>Subarray length <span class="math">K</span> is constant.</li>
+<li>Questions like <em>"Find max/min sum of any contiguous subarray of size <span class="math">K</span>"</em>.</li>
+</ul>
+<h3 id="universal-c-template_2">Universal C++ Template:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int fixedSlidingWindow(const vector&lt;int&gt;&amp; nums, int k) {
+    int n = nums.size();
+    if (n &lt; k) return -1;
+
+    // 1. Compute first window
+    int window_sum = 0;
+    for (int i = 0; i &lt; k; i++) {
+        window_sum += nums[i];
+    }
+
+    int max_sum = window_sum;
+
+    // 2. Slide window from index k to n - 1
+    for (int i = k; i &lt; n; i++) {
+        window_sum += nums[i] - nums[i - k]; // Add incoming, remove outgoing
+        max_sum = max(max_sum, window_sum);
+    }
+
+    return max_sum;
+}
+</code></pre>
+<hr />
+<h2 id="4-pattern-4-variable-size-sliding-window-the-gold-standard">4. Pattern 4: Variable-Size Sliding Window (The Gold Standard)</h2>
+<h3 id="when-to-use_3">When to Use:</h3>
+<ul>
+<li>Contiguous subarray/substring where you must find the <strong>longest</strong> or <strong>shortest</strong> window satisfying a condition.</li>
+<li>Example: <em>"Longest substring with at most <span class="math">K</span> distinct characters"</em>, <em>"Minimum window substring"</em>.</li>
+</ul>
+<h3 id="universal-c-template_3">Universal C++ Template:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int variableSlidingWindow(const string&amp; s) {
+    unordered_map&lt;char, int&gt; freq;
+    int left = 0;
+    int max_length = 0;
+
+    for (int right = 0; right &lt; s.length(); right++) {
+        // Step 1: Expand window by including s[right]
+        freq[s[right]]++;
+
+        // Step 2: Contract window from left while condition is violated
+        while (/* window is invalid condition */ false) {
+            freq[s[left]]--;
+            if (freq[s[left]] == 0) {
+                freq.erase(s[left]);
+            }
+            left++; // Shrink window
+        }
+
+        // Step 3: Update answer with current valid window
+        max_length = max(max_length, right - left + 1);
+    }
+
+    return max_length;
+}
+</code></pre>
+<h3 id="high-yield-classic-longest-substring-without-repeating-characters">High-Yield Classic: Longest Substring Without Repeating Characters</h3>
+<pre><code class="language-cpp">// LeetCode 3: Longest Substring Without Repeating Characters
+// Time: O(N), Space: O(min(N, alphabet_size))
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int lengthOfLongestSubstring(const string&amp; s) {
+    // Array map for ASCII characters (faster than unordered_map)
+    vector&lt;int&gt; last_seen(256, -1);
+    int max_len = 0;
+    int left = 0;
+
+    for (int right = 0; right &lt; s.length(); right++) {
+        char ch = s[right];
+
+        // If character seen within current window, jump left pointer
+        if (last_seen[ch] &gt;= left) {
+            left = last_seen[ch] + 1;
+        }
+
+        last_seen[ch] = right;
+        max_len = max(max_len, right - left + 1);
+    }
+
+    return max_len;
+}
+</code></pre>
+<hr />
+<h2 id="5-interview-checklist-edge-cases">5. Interview Checklist &amp; Edge Cases</h2>
+<ul>
+<li>[ ] What if array size is smaller than window size <span class="math">K</span>?</li>
+<li>[ ] For string problems: Are inputs guaranteed to be lowercase letters, ASCII, or Unicode? (Use <code>vector&lt;int&gt; count(256, 0)</code> instead of <code>unordered_map</code> if ASCII).</li>
+<li>[ ] When shrinking the window, remember to clean up frequencies down to zero to avoid inflated map size.</li>
+</ul>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-03-prefix-sums-difference-arrays">Module 03: Prefix Sums &amp; Difference Arrays</h1>
+<blockquote>
+<p><em>"When a problem requires querying cumulative sums or performing repeated range updates on arrays, Prefix Sums and Difference Arrays reduce query and update times from <span class="math">O(N)</span> down to an immediate <span class="math">O(1)</span>."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-core-concept-the-1-indexed-trick">1. Core Concept &amp; The 1-Indexed Trick</h2>
+<p>A prefix sum array stores cumulative sums from index <span class="math">0</span> to <span class="math">i</span>:<br />
+$<span class="math">prefix[i] = Σ(j=0..i) arr[j]</span><span class="math"></p>
+<p>Any contiguous range sum from index </span>L<span class="math"> to </span>R<span class="math"> can be answered in </span>O(1)<span class="math"> using:<br />
+</span><span class="math">Sum(L, R) = prefix[R] - prefix[L - 1]</span><span class="math"></p>
+<h3 id="the-1-indexed-padding-trick">💡 The 1-Indexed Padding Trick</h3>
+<p>In coding interviews, subtracting </span>L - 1<span class="math"> when </span>L = 0<span class="math"> causes negative index out-of-bounds checks (<code>if (L == 0)</code>). <br />
+To make your C++ code clean and bug-free, always allocate a <strong></span>(N + 1)<span class="math"> sized array</strong> where <code>prefix[0] = 0</code>:</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+class PrefixSum1D {
+private:
+    vector&lt;long long&gt; pref;
+
+public:
+    PrefixSum1D(const vector&lt;int&gt;&amp; nums) {
+        int n = nums.size();
+        pref.assign(n + 1, 0);
+        for (int i = 0; i &lt; n; i++) {
+            pref[i + 1] = pref[i] + nums[i];
+        }
+    }
+
+    // Returns sum of nums[L...R] inclusive (0-indexed) in O(1)
+    long long query(int L, int R) {
+        return pref[R + 1] - pref[L];
+    }
+};
+</code></pre>
+<hr />
+<h2 id="2-2d-prefix-sum-matrix-region-query">2. 2D Prefix Sum (Matrix Region Query)</h2>
+<p>When asked to compute the sum of any submatrix </span>(r_1, c_1)<span class="math"> to </span>(r_2, c_2)<span class="math"> repeatedly:</p>
+<h3 id="2d-inclusions-exclusions-formula">2D Inclusions-Exclusions Formula:</h3>
+<p></span><span class="math">Pref[r][c] = Matrix[r-1][c-1] + Pref[r-1][c] + Pref[r][c-1] - Pref[r-1][c-1]</span><span class="math"><br />
+</span><span class="math">RegionSum = Pref[r_2+1][c_2+1] - Pref[r_1][c_2+1] - Pref[r_2+1][c_1] + Pref[r_1][c_1]</span><span class="math"></p>
+<h3 id="c-implementation">C++ Implementation:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+class MatrixRegionSum {
+    vector&lt;vector&lt;int&gt;&gt; pref;
+
+public:
+    MatrixRegionSum(const vector&lt;vector&lt;int&gt;&gt;&amp; matrix) {
+        if (matrix.empty() || matrix[0].empty()) return;
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        pref.assign(rows + 1, vector&lt;int&gt;(cols + 1, 0));
+
+        for (int r = 0; r &lt; rows; r++) {
+            for (int c = 0; c &lt; cols; c++) {
+                pref[r + 1][c + 1] = matrix[r][c] 
+                                   + pref[r][c + 1] 
+                                   + pref[r + 1][c] 
+                                   - pref[r][c];
+            }
+        }
+    }
+
+    int sumRegion(int r1, int c1, int r2, int c2) {
+        return pref[r2 + 1][c2 + 1] 
+             - pref[r1][c2 + 1] 
+             - pref[r2 + 1][c1] 
+             + pref[r1][c1];
+    }
+};
+</code></pre>
+<hr />
+<h2 id="3-high-yield-goldmine-hash-map-prefix-sum">3. High-Yield Goldmine: Hash Map + Prefix Sum</h2>
+<h3 id="pattern-count-subarrays-meeting-condition">Pattern: Count Subarrays Meeting Condition</h3>
+<p>When an array contains <strong>negative numbers</strong>, sliding window FAILS because expanding/shrinking does not guarantee monotonic sums. You <strong>must</strong> use <code>unordered_map</code> with Prefix Sum.</p>
+<h3 id="classic-subarray-sum-equals-k-leetcode-560">Classic: Subarray Sum Equals </span>K<span class="math"> (LeetCode 560)</h3>
+<p><strong>Core Math:</strong> We need </span>curr_sum - prev_sum = K ⟹ prev_sum = curr_sum - K<span class="math">.<br />
+We count how many times </span>(curr_sum - K)<span class="math"> occurred in the past.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+
+int subarraySum(const vector&lt;int&gt;&amp; nums, int k) {
+    unordered_map&lt;int, int&gt; prefix_freq;
+    // Base case: a prefix sum of 0 has occurred once before we start
+    prefix_freq[0] = 1;
+
+    int current_sum = 0;
+    int total_subarrays = 0;
+
+    for (int x : nums) {
+        current_sum += x;
+        int needed = current_sum - k;
+
+        if (prefix_freq.find(needed) != prefix_freq.end()) {
+            total_subarrays += prefix_freq[needed];
+        }
+
+        prefix_freq[current_sum]++;
+    }
+
+    return total_subarrays;
+}
+</code></pre>
+<ul>
+<li><strong>Time Complexity:</strong> </span>O(N)<span class="math"></li>
+<li><strong>Space Complexity:</strong> </span>O(N)<span class="math"></li>
+</ul>
+<hr />
+<h2 id="4-the-difference-array-technique-o1-range-updates">4. The Difference Array Technique (</span>O(1)<span class="math"> Range Updates)</h2>
+<h3 id="when-to-use">When to Use:</h3>
+<p>Given an array initialized to 0, you receive </span>Q<span class="math"> queries: <em>"Add value </span>V<span class="math"> to all elements from index </span>L<span class="math"> to </span>R<span class="math">"</em>.<br />
+- Naive loop takes </span>O(Q × N)<span class="math"> </span>→<span class="math"> TLE.<br />
+- Difference Array does each update in <strong></span>O(1)<span class="math"></strong>, and reconstructs the array in <strong></span>O(N)<span class="math"></strong> at the end.</p>
+<h3 id="intuition">Intuition:</h3>
+<ul>
+<li>Add </span>+V<span class="math"> at index </span>L<span class="math">.</li>
+<li>Add </span>-V<span class="math"> at index </span>R + 1<span class="math"> (cancels the effect beyond </span>R<span class="math">).</li>
+<li>Compute running prefix sum of the difference array.</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+vector&lt;int&gt; applyRangeUpdates(int n, const vector&lt;vector&lt;int&gt;&gt;&amp; updates) {
+    // updates[i] = {L, R, val}
+    vector&lt;int&gt; diff(n + 1, 0);
+
+    // Step 1: Record boundaries in O(1)
+    for (const auto&amp; u : updates) {
+        int L = u[0];
+        int R = u[1];
+        int val = u[2];
+
+        diff[L] += val;
+        if (R + 1 &lt; n) {
+            diff[R + 1] -= val;
+        }
+    }
+
+    // Step 2: Accumulate prefix sum to build final array in O(N)
+    vector&lt;int&gt; result(n, 0);
+    int running_val = 0;
+    for (int i = 0; i &lt; n; i++) {
+        running_val += diff[i];
+        result[i] = running_val;
+    }
+
+    return result;
+}
+</code></pre>
+<hr />
+<h2 id="5-critical-interview-edge-cases">5. Critical Interview Edge Cases</h2>
+<ol>
+<li><strong>Integer Overflow:</strong> If array values can be up to </span>10^9<span class="math"> and </span>N = 10^5<span class="math">, prefix sums can reach </span>10^{14}$. Always use <code>long long</code> instead of <code>int</code>.</li>
+<li><strong>Negative Modulo Handling:</strong> When calculating <code>prefix % K</code>:<br />
+<code>cpp
+   int mod = (current_sum % k + k) % k; // Guarantees positive modulo in C++</code></li>
+<li><strong>Empty Subarray Initialization:</strong> Never forget <code>prefix_freq[0] = 1;</code> when counting subarrays with hash maps. Without it, subarrays starting at index 0 will be missed!</li>
+</ol>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-04-fast-searching-modified-binary-search">Module 04: Fast Searching &amp; Modified Binary Search</h1>
+<blockquote>
+<p><em>"Binary Search is not limited to finding elements in sorted arrays. Its real superpower is finding the optimal boundary in any monotonic True/False search space in <span class="math">O(log N)</span>."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-flawless-binary-search-template">1. The Flawless Binary Search Template</h2>
+<p>The most common bug in coding interviews is an <strong>infinite loop</strong> caused by boundary off-by-one errors (<code>mid - 1</code> vs <code>mid + 1</code>).</p>
+<p>Here is the universally reliable <strong>Inclusive Bounds Template</strong> (<code>[left, right]</code>):</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+int binarySearch(const vector&lt;int&gt;&amp; nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+
+    while (left &lt;= right) {
+        // Prevents overflow compared to (left + right) / 2
+        int mid = left + (right - left) / 2;
+
+        if (nums[mid] == target) {
+            return mid; // Target found
+        } else if (nums[mid] &lt; target) {
+            left = mid + 1; // Discard left half
+        } else {
+            right = mid - 1; // Discard right half
+        }
+    }
+
+    return -1; // Target does not exist
+}
+</code></pre>
+<hr />
+<h2 id="2-implementing-lower-upper-bound-from-scratch">2. Implementing Lower &amp; Upper Bound from Scratch</h2>
+<p>Top tech interviewers often ask: <em>"Implement <code>std::lower_bound</code> without using the STL function."</em></p>
+<h3 id="lower-bound-first-index-where-numsi-target">Lower Bound: First index where <code>nums[i] &gt;= target</code></h3>
+<pre><code class="language-cpp">int lowerBound(const vector&lt;int&gt;&amp; nums, int target) {
+    int left = 0, right = nums.size() - 1;
+    int ans = nums.size(); // Default if all elements are &lt; target
+
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &gt;= target) {
+            ans = mid;        // Candidate found, look for earlier match
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return ans;
+}
+</code></pre>
+<h3 id="upper-bound-first-index-where-numsi-target">Upper Bound: First index where <code>nums[i] &gt; target</code></h3>
+<pre><code class="language-cpp">int upperBound(const vector&lt;int&gt;&amp; nums, int target) {
+    int left = 0, right = nums.size() - 1;
+    int ans = nums.size();
+
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &gt; target) {
+            ans = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return ans;
+}
+</code></pre>
+<hr />
+<h2 id="3-the-faang-holy-grail-binary-search-on-answer-space">3. The FAANG Holy Grail: Binary Search on Answer Space</h2>
+<h3 id="when-to-recognize">When to Recognize:</h3>
+<ul>
+<li>The problem asks for:</li>
+<li><strong>"Minimum possible maximum..."</strong></li>
+<li><strong>"Maximum possible minimum..."</strong></li>
+<li><strong>"Find the minimum capacity/speed to complete work within <span class="math">D</span> days/hours."</strong></li>
+<li>The search space has a monotonic property: If capacity <span class="math">X</span> is feasible, every capacity <span class="math">&gt; X</span> is also feasible.</li>
+</ul>
+<pre><code>Feasibility:  [ False, False, False, True,  True,  True,  True ]
+                                       ▲
+                               Optimal Answer
+</code></pre>
+<h3 id="universal-master-template">Universal Master Template:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// Step 1: Write the feasibility tester
+bool isFeasible(const vector&lt;int&gt;&amp; weights, int days, int capacity) {
+    int days_needed = 1;
+    int current_load = 0;
+
+    for (int w : weights) {
+        if (w &gt; capacity) return false;
+        if (current_load + w &gt; capacity) {
+            days_needed++;
+            current_load = 0;
+        }
+        current_load += w;
+    }
+    return days_needed &lt;= days;
+}
+
+// Step 2: Binary search on the capacity range
+int shipWithinDays(const vector&lt;int&gt;&amp; weights, int days) {
+    int left = *max_element(weights.begin(), weights.end());
+    int right = accumulate(weights.begin(), weights.end(), 0);
+    int optimal_capacity = right;
+
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+
+        if (isFeasible(weights, days, mid)) {
+            optimal_capacity = mid; // Try smaller capacity
+            right = mid - 1;
+        } else {
+            left = mid + 1;        // Must increase capacity
+        }
+    }
+
+    return optimal_capacity;
+}
+</code></pre>
+<hr />
+<h2 id="4-searching-in-rotated-sorted-array">4. Searching in Rotated Sorted Array</h2>
+<h3 id="core-intuition">Core Intuition:</h3>
+<p>In a rotated sorted array, <strong>at least one half (left or right) is ALWAYS strictly sorted</strong>. <br />
+Check which half is sorted, and test if the target falls within that sorted half's range.</p>
+<pre><code class="language-cpp">// LeetCode 33: Search in Rotated Sorted Array
+// Time: O(log N), Space: O(1)
+int searchRotated(const vector&lt;int&gt;&amp; nums, int target) {
+    int left = 0, right = nums.size() - 1;
+
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) return mid;
+
+        // Check if Left Half is sorted
+        if (nums[left] &lt;= nums[mid]) {
+            if (target &gt;= nums[left] &amp;&amp; target &lt; nums[mid]) {
+                right = mid - 1; // Target lies in sorted left half
+            } else {
+                left = mid + 1;
+            }
+        } 
+        // Otherwise, Right Half must be sorted
+        else {
+            if (target &gt; nums[mid] &amp;&amp; target &lt;= nums[right]) {
+                left = mid + 1;  // Target lies in sorted right half
+            } else {
+                right = mid - 1;
+            }
+        }
+    }
+
+    return -1;
+}
+</code></pre>
+<hr />
+<h2 id="5-summary-cheat-sheet">5. Summary Cheat Sheet</h2>
+<ul>
+<li><strong>Boundary Range:</strong> Always specify <code>left</code> and <code>right</code> based on physical limits of the answer.</li>
+<li><strong>Loop Condition:</strong> Standard rule is <code>while (left &lt;= right)</code>.</li>
+<li><strong>Termination:</strong> When looking for minimum valid answer, return <code>ans</code> saved inside <code>if (feasible)</code> branch.</li>
+</ul>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-05-monotonic-stack-deque">Module 05: Monotonic Stack &amp; Deque</h1>
+<blockquote>
+<p><em>"A Monotonic Stack maintains elements in strictly increasing or decreasing order. It is the definitive technique for finding the Next/Previous Greater/Smaller element in <span class="math">O(N)</span> amortized time instead of <span class="math">O(N^2)</span>."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-what-is-a-monotonic-stack">1. What is a Monotonic Stack?</h2>
+<p>A standard stack allows <span class="math">O(1)</span> push and pop. A <strong>Monotonic Stack</strong> adds a single invariant:<br />
+- <strong>Monotonic Decreasing:</strong> Values decrease from bottom to top (e.g., <code>[10, 7, 5, 2]</code>). When a larger element arrives, smaller elements are popped.<br />
+- <strong>Monotonic Increasing:</strong> Values increase from bottom to top (e.g., <code>[2, 5, 7, 10]</code>). When a smaller element arrives, larger elements are popped.</p>
+<blockquote>
+<p>⚡ <strong>Amortized <span class="math">O(N)</span> Complexity:</strong> Each element is pushed onto the stack exactly once and popped at most once across the entire loop.</p>
+</blockquote>
+<hr />
+<h2 id="2-universal-template-next-greater-element">2. Universal Template: Next Greater Element</h2>
+<h3 id="problem-statement">Problem Statement:</h3>
+<p>For each element in an array, find the first element to its right that has a strictly greater value. If none exists, return <code>-1</code>.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;stack&gt;
+using namespace std;
+
+vector&lt;int&gt; nextGreaterElement(const vector&lt;int&gt;&amp; nums) {
+    int n = nums.size();
+    vector&lt;int&gt; result(n, -1);
+    stack&lt;int&gt; st; // Stores indices
+
+    for (int i = 0; i &lt; n; i++) {
+        // While current element is greater than element at top of stack
+        while (!st.empty() &amp;&amp; nums[i] &gt; nums[st.top()]) {
+            int prev_idx = st.top();
+            st.pop();
+            result[prev_idx] = nums[i]; // Found next greater element
+        }
+        st.push(i); // Push current index
+    }
+
+    return result;
+}
+</code></pre>
+<hr />
+<h2 id="3-high-yield-classic-daily-temperatures-leetcode-739">3. High-Yield Classic: Daily Temperatures (LeetCode 739)</h2>
+<p>Given temperatures array, return an array of how many days you have to wait until a warmer temperature.</p>
+<pre><code class="language-cpp">// Time: O(N), Space: O(N)
+vector&lt;int&gt; dailyTemperatures(const vector&lt;int&gt;&amp; temperatures) {
+    int n = temperatures.size();
+    vector&lt;int&gt; answer(n, 0);
+    stack&lt;int&gt; st; // Indices
+
+    for (int i = 0; i &lt; n; i++) {
+        while (!st.empty() &amp;&amp; temperatures[i] &gt; temperatures[st.top()]) {
+            int prev_index = st.top();
+            st.pop();
+            answer[prev_index] = i - prev_index; // Distance in days
+        }
+        st.push(i);
+    }
+    return answer;
+}
+</code></pre>
+<hr />
+<h2 id="4-the-faang-benchmark-largest-rectangle-in-histogram-leetcode-84">4. The FAANG Benchmark: Largest Rectangle in Histogram (LeetCode 84)</h2>
+<h3 id="core-intuition">Core Intuition:</h3>
+<p>For each bar at index <span class="math">i</span>, the maximum rectangle containing this bar extends to the left until we hit a bar shorter than <code>heights[i]</code>, and extends to the right until we hit a bar shorter than <code>heights[i]</code>.<br />
+Using a monotonic increasing stack, we compute both boundaries in a single pass.</p>
+<pre><code class="language-cpp">// Time: O(N), Space: O(N)
+int largestRectangleArea(const vector&lt;int&gt;&amp; heights) {
+    int n = heights.size();
+    stack&lt;int&gt; st; // Stores indices of increasing heights
+    int max_area = 0;
+
+    for (int i = 0; i &lt;= n; i++) {
+        // Use a dummy height of 0 at index n to flush out all remaining bars in the stack
+        int current_height = (i == n) ? 0 : heights[i];
+
+        while (!st.empty() &amp;&amp; current_height &lt; heights[st.top()]) {
+            int h = heights[st.top()];
+            st.pop();
+
+            // Width calculation:
+            // If stack is empty, width stretches from index 0 to i - 1 (width = i)
+            // Otherwise, width is between current i and new stack top (width = i - st.top() - 1)
+            int width = st.empty() ? i : (i - st.top() - 1);
+            max_area = max(max_area, h * width);
+        }
+        st.push(i);
+    }
+
+    return max_area;
+}
+</code></pre>
+<hr />
+<h2 id="5-monotonic-deque-sliding-window-maximum-leetcode-239">5. Monotonic Deque: Sliding Window Maximum (LeetCode 239)</h2>
+<h3 id="problem">Problem:</h3>
+<p>Given array <code>nums</code> and window size <code>k</code>, find the maximum element in each sliding window.<br />
+- Using a heap: <span class="math">O(N log K)</span>.<br />
+- Using a <strong>Monotonic Deque</strong>: <strong>Strictly <span class="math">O(N)</span></strong>.</p>
+<h3 id="master-template">Master Template:</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;deque&gt;
+using namespace std;
+
+vector&lt;int&gt; maxSlidingWindow(const vector&lt;int&gt;&amp; nums, int k) {
+    deque&lt;int&gt; dq; // Stores indices in decreasing order of their values
+    vector&lt;int&gt; result;
+
+    for (int i = 0; i &lt; nums.size(); i++) {
+        // 1. Remove indices that fell outside the current window [i - k + 1, i]
+        if (!dq.empty() &amp;&amp; dq.front() &lt;= i - k) {
+            dq.pop_front();
+        }
+
+        // 2. Remove smaller elements from back (they can never be the max)
+        while (!dq.empty() &amp;&amp; nums[dq.back()] &lt;= nums[i]) {
+            dq.pop_back();
+        }
+
+        // 3. Add current index
+        dq.push_back(i);
+
+        // 4. Record answer once the first valid window of size k is formed
+        if (i &gt;= k - 1) {
+            result.push_back(nums[dq.front()]);
+        }
+    }
+
+    return result;
+}
+</code></pre>
+<hr />
+<h2 id="interview-pro-tips-for-monotonic-data-structures">💡 Interview Pro-Tips for Monotonic Data Structures</h2>
+<ol>
+<li><strong>Always store INDICES in the stack/deque, NOT values.</strong> With an index <code>i</code>, you can access both the value (<code>nums[i]</code>) and calculate distances (<code>i - prev_idx</code>).</li>
+<li><strong>Sentinel/Dummy Trick:</strong> Appending a <code>0</code> or negative infinity at the end of the array cleanly flushes remaining elements from the stack without writing duplicate cleanup loops.</li>
+</ol>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-06-linked-lists-the-pointer-mechanics">Module 06: Linked Lists - The Pointer Mechanics</h1>
+<blockquote>
+<p><em>"Linked List problems are rarely about complex math. They test pointer discipline, edge-case management, and your ability to avoid segmentation faults without allocating unnecessary memory."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-golden-rule-the-sentinel-dummy-head-pattern">1. The Golden Rule: The Sentinel (Dummy Head) Pattern</h2>
+<p>90% of bugs in Linked List interview rounds come from handling operations at the <strong>head</strong> (e.g., deleting the first node or merging into an empty list).</p>
+<h3 id="the-solution">The Solution:</h3>
+<p>Create a temporary stack-allocated <code>dummy</code> node whose <code>.next</code> points to <code>head</code>. Always return <code>dummy.next</code>:</p>
+<pre><code class="language-cpp">struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+// Example: Remove elements with target value
+ListNode* removeElements(ListNode* head, int val) {
+    ListNode dummy(0); // Stack allocated - zero memory leak
+    dummy.next = head;
+
+    ListNode* curr = &amp;dummy;
+    while (curr-&gt;next != nullptr) {
+        if (curr-&gt;next-&gt;val == val) {
+            ListNode* temp = curr-&gt;next;
+            curr-&gt;next = curr-&gt;next-&gt;next;
+            delete temp; // Clean memory management in C++
+        } else {
+            curr = curr-&gt;next;
+        }
+    }
+
+    return dummy.next;
+}
+</code></pre>
+<hr />
+<h2 id="2-in-place-reversal-iterative-recursive">2. In-Place Reversal (Iterative &amp; Recursive)</h2>
+<h3 id="the-3-pointer-iterative-template">The 3-Pointer Iterative Template:</h3>
+<p>Remember the mantra: <code>next_node -&gt; curr-&gt;next -&gt; prev -&gt; curr</code>.</p>
+<pre><code class="language-cpp">// Time: O(N), Space: O(1)
+ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+
+    while (curr != nullptr) {
+        ListNode* next_node = curr-&gt;next; // 1. Save next pointer
+        curr-&gt;next = prev;               // 2. Reverse link
+        prev = curr;                     // 3. Move prev forward
+        curr = next_node;                // 4. Move curr forward
+    }
+
+    return prev; // New head of reversed list
+}
+</code></pre>
+<hr />
+<h2 id="3-high-yield-faang-hard-reverse-nodes-in-k-group-leetcode-25">3. High-Yield FAANG Hard: Reverse Nodes in <span class="math">K</span>-Group (LeetCode 25)</h2>
+<p>Given a linked list, reverse the nodes of a list <span class="math">k</span> at a time, leaving leftover nodes unchanged.</p>
+<pre><code class="language-cpp">// Time: O(N), Space: O(1)
+ListNode* reverseKGroup(ListNode* head, int k) {
+    // 1. Check if there are at least k nodes remaining
+    ListNode* check = head;
+    for (int i = 0; i &lt; k; i++) {
+        if (!check) return head; // Less than k nodes, keep as is
+        check = check-&gt;next;
+    }
+
+    // 2. Reverse first k nodes
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    for (int i = 0; i &lt; k; i++) {
+        ListNode* next_node = curr-&gt;next;
+        curr-&gt;next = prev;
+        prev = curr;
+        curr = next_node;
+    }
+
+    // 3. Recursively reverse the remaining list and connect
+    head-&gt;next = reverseKGroup(curr, k);
+
+    return prev;
+}
+</code></pre>
+<hr />
+<h2 id="4-merge-k-sorted-lists-leetcode-23">4. Merge <span class="math">K</span> Sorted Lists (LeetCode 23)</h2>
+<h3 id="core-technique-min-heap-priority_queue">Core Technique: Min-Heap (<code>priority_queue</code>)</h3>
+<p>Instead of merging one by one in <span class="math">O(K × N)</span> or comparing all <span class="math">K</span> nodes in <span class="math">O(K)</span>, store the current front node of each of the <span class="math">K</span> lists in a min-heap.<br />
+- Time Complexity: <strong><span class="math">O(N log K)</span></strong>, where <span class="math">N</span> is total nodes.</p>
+<h3 id="c-modern-lambda-comparator-template">C++ Modern Lambda Comparator Template:</h3>
+<pre><code class="language-cpp">#include &lt;queue&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+ListNode* mergeKLists(vector&lt;ListNode*&gt;&amp; lists) {
+    // Min-heap comparing ListNode values
+    auto compare = [](ListNode* a, ListNode* b) {
+        return a-&gt;val &gt; b-&gt;val;
+    };
+    priority_queue&lt;ListNode*, vector&lt;ListNode*&gt;, decltype(compare)&gt; min_heap(compare);
+
+    // Push head of each non-empty list
+    for (ListNode* node : lists) {
+        if (node != nullptr) {
+            min_heap.push(node);
+        }
+    }
+
+    ListNode dummy(0);
+    ListNode* tail = &amp;dummy;
+
+    while (!min_heap.empty()) {
+        ListNode* smallest = min_heap.top();
+        min_heap.pop();
+
+        tail-&gt;next = smallest;
+        tail = tail-&gt;next;
+
+        if (smallest-&gt;next != nullptr) {
+            min_heap.push(smallest-&gt;next);
+        }
+    }
+
+    return dummy.next;
+}
+</code></pre>
+<hr />
+<h2 id="5-detecting-cycle-finding-cycle-origin-floyds-algorithm">5. Detecting Cycle &amp; Finding Cycle Origin (Floyd's Algorithm)</h2>
+<h3 id="mathematical-proof">Mathematical Proof:</h3>
+<ol>
+<li>Fast pointer moves at <span class="math">2×</span> speed, Slow moves at <span class="math">1×</span>.</li>
+<li>Once they meet inside the cycle:</li>
+<li>Distance from <code>head</code> to cycle start = Distance from intersection point to cycle start!</li>
+<li>Move one pointer to <code>head</code>, keep the other at meeting point. Advance both by 1 step until they meet.</li>
+</ol>
+<pre><code class="language-cpp">ListNode *detectCycle(ListNode *head) {
+    if (!head || !head-&gt;next) return nullptr;
+
+    ListNode *slow = head, *fast = head;
+    bool has_cycle = false;
+
+    while (fast &amp;&amp; fast-&gt;next) {
+        slow = slow-&gt;next;
+        fast = fast-&gt;next-&gt;next;
+        if (slow == fast) {
+            has_cycle = true;
+            break;
+        }
+    }
+
+    if (!has_cycle) return nullptr;
+
+    // Reset slow to head, advance both by 1 step
+    slow = head;
+    while (slow != fast) {
+        slow = slow-&gt;next;
+        fast = fast-&gt;next;
+    }
+
+    return slow; // Start node of cycle
+}
+</code></pre>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-07-binary-trees-bst-patterns">Module 07: Binary Trees &amp; BST Patterns</h1>
+<blockquote>
+<p><em>"Every tree algorithm is either a Top-Down decision (passing parameters to children) or a Bottom-Up synthesis (aggregating results returned by children)."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-top-down-vs-bottom-up-recursion-mental-model">1. Top-Down vs Bottom-Up Recursion Mental Model</h2>
+<pre><code>       Top-Down (Pre-order / Downward)           Bottom-Up (Post-order / Bubbling Up)
+           Parent passes limits/state                 Children return sub-answers
+                     [ Root ]                                   [ Root ]
+                     /      \                                   ▲      ▲
+               Pass down   Pass down                     Merge left &amp; right results
+</code></pre>
+<ul>
+<li><strong>Top-Down Rule:</strong> Use when each child needs information from ancestors (e.g., Path Sum, Valid BST range validation).</li>
+<li><strong>Bottom-Up Rule:</strong> Use when the current node needs answers calculated from its subtrees (e.g., Tree Height, Diameter, Maximum Path Sum).</li>
+</ul>
+<hr />
+<h2 id="2-universal-template-bfs-level-order-traversal">2. Universal Template: BFS Level-Order Traversal</h2>
+<p>Essential for problems involving level-by-level processing, zig-zag traversals, or finding the right-side view.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+    vector&lt;vector&lt;int&gt;&gt; levels;
+    if (!root) return levels;
+
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int level_size = q.size(); // Freeze current level count
+        vector&lt;int&gt; current_level;
+
+        for (int i = 0; i &lt; level_size; i++) {
+            TreeNode* curr = q.front();
+            q.pop();
+
+            current_level.push_back(curr-&gt;val);
+
+            if (curr-&gt;left) q.push(curr-&gt;left);
+            if (curr-&gt;right) q.push(curr-&gt;right);
+        }
+
+        levels.push_back(current_level);
+    }
+
+    return levels;
+}
+</code></pre>
+<hr />
+<h2 id="3-high-yield-classic-lowest-common-ancestor-lca">3. High-Yield Classic: Lowest Common Ancestor (LCA)</h2>
+<h3 id="in-a-general-binary-tree-bottom-up">In a General Binary Tree (Bottom-Up):</h3>
+<pre><code class="language-cpp">// Time: O(N), Space: O(H) recursion stack
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (!root || root == p || root == q) {
+        return root;
+    }
+
+    TreeNode* left = lowestCommonAncestor(root-&gt;left, p, q);
+    TreeNode* right = lowestCommonAncestor(root-&gt;right, p, q);
+
+    // If both left and right returned non-null, root is the LCA!
+    if (left &amp;&amp; right) return root;
+
+    // Otherwise, return whichever child found a target
+    return left ? left : right;
+}
+</code></pre>
+<h3 id="in-a-binary-search-tree-bst-oh">In a Binary Search Tree (BST) (<span class="math">O(H)</span>):</h3>
+<pre><code class="language-cpp">TreeNode* lowestCommonAncestorBST(TreeNode* root, TreeNode* p, TreeNode* q) {
+    while (root) {
+        if (p-&gt;val &lt; root-&gt;val &amp;&amp; q-&gt;val &lt; root-&gt;val) {
+            root = root-&gt;left; // Both targets in left subtree
+        } else if (p-&gt;val &gt; root-&gt;val &amp;&amp; q-&gt;val &gt; root-&gt;val) {
+            root = root-&gt;right; // Both targets in right subtree
+        } else {
+            return root; // Split point or matched root
+        }
+    }
+    return nullptr;
+}
+</code></pre>
+<hr />
+<h2 id="4-tree-dynamic-programming-diameter-max-path-sum">4. Tree Dynamic Programming: Diameter &amp; Max Path Sum</h2>
+<h3 id="maximum-path-sum-leetcode-124">Maximum Path Sum (LeetCode 124)</h3>
+<p>Any path can curve through at most one peak node. We calculate max downward contribution of subtrees while updating global path at each node:</p>
+<pre><code class="language-cpp">#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+using namespace std;
+
+class SolutionMaxPath {
+    int global_max = INT_MIN;
+
+    int maxGain(TreeNode* node) {
+        if (!node) return 0;
+
+        // Ignore negative paths by taking max with 0
+        int left_gain = max(0, maxGain(node-&gt;left));
+        int right_gain = max(0, maxGain(node-&gt;right));
+
+        // Path sum with current node as the highest ancestor
+        int current_path = node-&gt;val + left_gain + right_gain;
+        global_max = max(global_max, current_path);
+
+        // Return max one-sided path to parent
+        return node-&gt;val + max(left_gain, right_gain);
+    }
+
+public:
+    int maxPathSum(TreeNode* root) {
+        maxGain(root);
+        return global_max;
+    }
+};
+</code></pre>
+<hr />
+<h2 id="5-validating-a-binary-search-tree-top-down-range-check">5. Validating a Binary Search Tree (Top-Down Range Check)</h2>
+<p>A common mistake is checking only <code>root-&gt;left-&gt;val &lt; root-&gt;val</code>. In reality, <strong>every node in the left subtree must be less than the root</strong>.</p>
+<pre><code class="language-cpp">bool isValidBSTHelper(TreeNode* root, long long min_val, long long max_val) {
+    if (!root) return true;
+
+    if (root-&gt;val &lt;= min_val || root-&gt;val &gt;= max_val) {
+        return false;
+    }
+
+    return isValidBSTHelper(root-&gt;left, min_val, root-&gt;val) &amp;&amp;
+           isValidBSTHelper(root-&gt;right, root-&gt;val, max_val);
+}
+
+bool isValidBST(TreeNode* root) {
+    return isValidBSTHelper(root, LLONG_MIN, LLONG_MAX);
+}
+</code></pre>
+<hr />
+<h2 id="tree-interview-checklist">💡 Tree Interview Checklist</h2>
+<ul>
+<li>[ ] Did you check if the tree can be empty (<code>root == nullptr</code>)?</li>
+<li>[ ] For BST questions: Can you exploit the fact that <strong>In-order Traversal visits nodes in strictly ascending order</strong>?</li>
+<li>[ ] For deep trees: Is tree balanced (<span class="math">O(log N)</span> stack) or degenerate (<span class="math">O(N)</span> stack)?</li>
+</ul>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-08-priority-queues-heaps">Module 08: Priority Queues &amp; Heaps</h1>
+<blockquote>
+<p><em>"When a problem asks for Top K elements, dynamic running medians, or greedy task scheduling, a Heap provides <span class="math">O(log K)</span> updates instead of sorting the whole collection repeatedly in <span class="math">O(N log N)</span>."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-c-stl-stdpriority_queue-fundamentals">1. C++ STL <code>std::priority_queue</code> Fundamentals</h2>
+<p>By default, C++ creates a <strong>Max-Heap</strong>:</p>
+<pre><code class="language-cpp">#include &lt;queue&gt;
+using namespace std;
+
+priority_queue&lt;int&gt; max_heap; // Largest element at top()
+
+// Min-Heap (Smallest element at top())
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; min_heap;
+</code></pre>
+<h3 id="custom-struct-lambda-comparators">Custom Struct &amp; Lambda Comparators</h3>
+<p>In interviews, you will frequently need to store complex objects (e.g., pairs of <code>{freq, value}</code>):</p>
+<pre><code class="language-cpp">// Method A: Custom Functor struct
+struct ComparePairs {
+    bool operator()(const pair&lt;int, int&gt;&amp; a, const pair&lt;int, int&gt;&amp; b) {
+        // Return true if 'a' has LOWER priority than 'b' (min-heap logic)
+        return a.first &gt; b.first;
+    }
+};
+priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, ComparePairs&gt; custom_pq;
+
+// Method B: Modern C++ Lambda Comparator
+auto cmp = [](const pair&lt;int, int&gt;&amp; a, const pair&lt;int, int&gt;&amp; b) {
+    return a.first &gt; b.first;
+};
+priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, decltype(cmp)&gt; lambda_pq(cmp);
+</code></pre>
+<hr />
+<h2 id="2-pattern-1-top-k-frequent-elements">2. Pattern 1: Top <span class="math">K</span> Frequent Elements</h2>
+<h3 id="golden-rule">Golden Rule:</h3>
+<ul>
+<li>To find <strong><span class="math">K</span> Largest</strong> elements <span class="math">→</span> Maintain a <strong>Min-Heap of size <span class="math">K</span></strong>.</li>
+<li>To find <strong><span class="math">K</span> Smallest</strong> elements <span class="math">→</span> Maintain a <strong>Max-Heap of size <span class="math">K</span></strong>.</li>
+</ul>
+<p>Why? When the heap exceeds size <span class="math">K</span>, popping from a Min-Heap discards the smallest of the top candidates, guaranteeing that only the <span class="math">K</span> largest survive.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// Time: O(N log K), Space: O(N)
+vector&lt;int&gt; topKFrequent(const vector&lt;int&gt;&amp; nums, int k) {
+    unordered_map&lt;int, int&gt; count_map;
+    for (int x : nums) count_map[x]++;
+
+    // Min-heap storing {frequency, number}
+    priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt; min_heap;
+
+    for (const auto&amp; [num, freq] : count_map) {
+        min_heap.push({freq, num});
+        if (min_heap.size() &gt; k) {
+            min_heap.pop(); // Evict smallest frequency
+        }
+    }
+
+    vector&lt;int&gt; result;
+    while (!min_heap.empty()) {
+        result.push_back(min_heap.top().second);
+        min_heap.pop();
+    }
+    return result;
+}
+</code></pre>
+<hr />
+<h2 id="3-pattern-2-two-heaps-median-from-data-stream">3. Pattern 2: Two Heaps (Median from Data Stream)</h2>
+<h3 id="problem">Problem:</h3>
+<p>Design a data structure that supports adding numbers and finding the running median in <span class="math">O(1)</span> time.</p>
+<h3 id="architecture">Architecture:</h3>
+<p>Divide the stream into two balanced halves:<br />
+- <code>max_heap_lower</code>: Stores the smaller half of numbers (its top is the max of the small half).<br />
+- <code>min_heap_upper</code>: Stores the larger half of numbers (its top is the min of the large half).</p>
+<pre><code>[ Lower Half (Max-Heap) ]  &lt;=  [ Upper Half (Min-Heap) ]
+      top() = max                    top() = min
+</code></pre>
+<pre><code class="language-cpp">class MedianFinder {
+    priority_queue&lt;int&gt; max_lower;                             // Stores small half
+    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; min_upper;  // Stores large half
+
+public:
+    void addNum(int num) {
+        // Step 1: Add to lower heap
+        max_lower.push(num);
+
+        // Step 2: Ensure order invariant (max of lower &lt;= min of upper)
+        min_upper.push(max_lower.top());
+        max_lower.pop();
+
+        // Step 3: Ensure size invariant (lower heap can have at most 1 extra element)
+        if (max_lower.size() &lt; min_upper.size()) {
+            max_lower.push(min_upper.top());
+            min_upper.pop();
+        }
+    }
+
+    double findMedian() {
+        if (max_lower.size() &gt; min_upper.size()) {
+            return max_lower.top();
+        }
+        return (max_lower.top() + min_upper.top()) / 2.0;
+    }
+};
+</code></pre>
+<ul>
+<li><strong><code>addNum</code> Time:</strong> <span class="math">O(log N)</span></li>
+<li><strong><code>findMedian</code> Time:</strong> <span class="math">O(1)</span></li>
+</ul>
+<hr />
+<h2 id="4-pattern-3-interval-scheduling-meeting-rooms-ii">4. Pattern 3: Interval Scheduling (Meeting Rooms II)</h2>
+<p>Given an array of meeting time intervals <code>[[s1, e1], [s2, e2], ...]</code>, find the minimum number of conference rooms required.</p>
+<h3 id="technique-min-heap-of-end-times">Technique: Min-Heap of End Times</h3>
+<pre><code class="language-cpp">#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+int minMeetingRooms(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+    if (intervals.empty()) return 0;
+
+    // 1. Sort intervals by start time
+    sort(intervals.begin(), intervals.end(), [](const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {
+        return a[0] &lt; b[0];
+    });
+
+    // 2. Min-heap storing end times of currently active meetings
+    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; min_end_times;
+
+    for (const auto&amp; meeting : intervals) {
+        int start = meeting[0];
+        int end = meeting[1];
+
+        // If an earlier meeting has finished before current start, reuse that room
+        if (!min_end_times.empty() &amp;&amp; min_end_times.top() &lt;= start) {
+            min_end_times.pop();
+        }
+
+        min_end_times.push(end);
+    }
+
+    return min_end_times.size(); // Total active rooms needed
+}
+</code></pre>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-09-graph-traversal-connectivity">Module 09: Graph Traversal &amp; Connectivity</h1>
+<blockquote>
+<p><em>"Graphs model relationships. The trick to acing graph interview rounds is having clean, reusable boilerplate templates for BFS, DFS, Topological Sorting, and Union-Find."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-graph-representations-in-modern-c">1. Graph Representations in Modern C++</h2>
+<p>In coding interviews, avoid raw pointers and linked lists for graphs. Always use an <strong>Adjacency List</strong> using <code>vector&lt;vector&lt;int&gt;&gt;</code>:</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+// Unweighted directed/undirected graph with V vertices
+int V = 5;
+vector&lt;vector&lt;int&gt;&gt; adj(V);
+
+// Add edge u -&gt; v
+adj[u].push_back(v);
+// If undirected, also add v -&gt; u
+adj[v].push_back(u);
+
+// Weighted graph: vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj (stores {neighbor, weight})
+</code></pre>
+<hr />
+<h2 id="2-grid-traversal-number-of-islands-leetcode-200">2. Grid Traversal: Number of Islands (LeetCode 200)</h2>
+<p>Direction arrays (<code>dr</code>, <code>dc</code>) make 4-directional grid traversal clean and bug-free:</p>
+<pre><code class="language-cpp">// Time: O(M * N), Space: O(M * N)
+void dfsGrid(vector&lt;vector&lt;char&gt;&gt;&amp; grid, int r, int c) {
+    int rows = grid.size();
+    int cols = grid[0].size();
+
+    // Out of bounds or water
+    if (r &lt; 0 || r &gt;= rows || c &lt; 0 || c &gt;= cols || grid[r][c] != '1') {
+        return;
+    }
+
+    grid[r][c] = '0'; // Sink island in-place to avoid separate visited set
+
+    const int dr[4] = {-1, 1, 0, 0};
+    const int dc[4] = {0, 0, -1, 1};
+
+    for (int i = 0; i &lt; 4; i++) {
+        dfsGrid(grid, r + dr[i], c + dc[i]);
+    }
+}
+
+int numIslands(vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
+    if (grid.empty()) return 0;
+    int islands = 0;
+
+    for (int r = 0; r &lt; grid.size(); r++) {
+        for (int c = 0; c &lt; grid[0].size(); c++) {
+            if (grid[r][c] == '1') {
+                islands++;
+                dfsGrid(grid, r, c);
+            }
+        }
+    }
+    return islands;
+}
+</code></pre>
+<hr />
+<h2 id="3-cycle-detection-in-directed-graphs-3-state-coloring">3. Cycle Detection in Directed Graphs (3-State Coloring)</h2>
+<p>In directed graphs, tracking simple <code>visited[u]</code> is insufficient. You must detect <strong>Back-Edges</strong> (visiting a node currently in the active recursion stack).</p>
+<pre><code class="language-cpp">// States: 0 = Unvisited, 1 = Visiting (in recursion stack), 2 = Fully Visited
+bool hasCycleDirected(int u, const vector&lt;vector&lt;int&gt;&gt;&amp; adj, vector&lt;int&gt;&amp; state) {
+    state[u] = 1; // Mark as visiting
+
+    for (int v : adj[u]) {
+        if (state[v] == 1) {
+            return true; // Cycle found! Reached a node in current recursion path
+        }
+        if (state[v] == 0 &amp;&amp; hasCycleDirected(v, adj, state)) {
+            return true;
+        }
+    }
+
+    state[u] = 2; // Mark fully processed
+    return false;
+}
+</code></pre>
+<hr />
+<h2 id="4-topological-sort-kahns-algorithm-bfs">4. Topological Sort: Kahn's Algorithm (BFS)</h2>
+<h3 id="when-to-use">When to Use:</h3>
+<p>Prerequisite ordering (e.g., Course Schedule), build order, task dependencies in DAGs (Directed Acyclic Graphs).</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// LeetCode 210: Course Schedule II
+vector&lt;int&gt; findOrder(int numCourses, const vector&lt;vector&lt;int&gt;&gt;&amp; prerequisites) {
+    vector&lt;vector&lt;int&gt;&gt; adj(numCourses);
+    vector&lt;int&gt; in_degree(numCourses, 0);
+
+    for (const auto&amp; pre : prerequisites) {
+        int course = pre[0];
+        int dependency = pre[1];
+        adj[dependency].push_back(course);
+        in_degree[course]++;
+    }
+
+    queue&lt;int&gt; q;
+    for (int i = 0; i &lt; numCourses; i++) {
+        if (in_degree[i] == 0) q.push(i);
+    }
+
+    vector&lt;int&gt; order;
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        order.push_back(u);
+
+        for (int v : adj[u]) {
+            in_degree[v]--;
+            if (in_degree[v] == 0) {
+                q.push(v);
+            }
+        }
+    }
+
+    // If order does not contain all courses, graph has a cycle!
+    return (order.size() == numCourses) ? order : vector&lt;int&gt;();
+}
+</code></pre>
+<hr />
+<h2 id="5-disjoint-set-union-dsu-union-find-boilerplate">5. Disjoint Set Union (DSU / Union-Find) Boilerplate</h2>
+<p>DSU achieves <strong>almost <span class="math">O(1)</span> amortized operations</strong> (<span class="math">O(\alpha(N))</span> via the Inverse Ackermann function) using two optimizations: <strong>Path Compression</strong> and <strong>Union by Rank/Size</strong>.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+using namespace std;
+
+class DisjointSetUnion {
+    vector&lt;int&gt; parent;
+    vector&lt;int&gt; rank;
+
+public:
+    DisjointSetUnion(int n) {
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0); // parent[i] = i
+        rank.assign(n, 0);
+    }
+
+    // Find with Path Compression
+    int find(int i) {
+        if (parent[i] == i)
+            return i;
+        return parent[i] = find(parent[i]);
+    }
+
+    // Union by Rank. Returns false if already in the same set (cycle detected)
+    bool unite(int i, int j) {
+        int root_i = find(i);
+        int root_j = find(j);
+
+        if (root_i == root_j) return false; // Cycle detected
+
+        if (rank[root_i] &lt; rank[root_j]) {
+            parent[root_i] = root_j;
+        } else if (rank[root_i] &gt; rank[root_j]) {
+            parent[root_j] = root_i;
+        } else {
+            parent[root_j] = root_i;
+            rank[root_i]++;
+        }
+        return true;
+    }
+};
+</code></pre>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-10-shortest-paths-minimum-spanning-tree">Module 10: Shortest Paths &amp; Minimum Spanning Tree</h1>
+<blockquote>
+<p><em>"Choose the right tool for the right graph: Unweighted <span class="math">→</span> BFS; Non-negative weighted <span class="math">→</span> Dijkstra; Negative edges <span class="math">→</span> Bellman-Ford; All-Pairs <span class="math">→</span> Floyd-Warshall."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-shortest-path-algorithm-selection-matrix">1. Shortest Path Algorithm Selection Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Edge Weights</th>
+<th>Single Source / All Pairs</th>
+<th>Time Complexity</th>
+<th>When to Use in Interviews</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BFS</strong></td>
+<td>Unweighted (<span class="math">W = 1</span>)</td>
+<td>Single Source</td>
+<td><span class="math">O(V + E)</span></td>
+<td>Grid mazes, minimum moves, word ladder</td>
+</tr>
+<tr>
+<td><strong>Dijkstra</strong></td>
+<td>Non-negative (<span class="math">W ≥ 0</span>)</td>
+<td>Single Source</td>
+<td><span class="math">O((V + E) log V)</span></td>
+<td>Network delay, road networks</td>
+</tr>
+<tr>
+<td><strong>Bellman-Ford</strong></td>
+<td>Can have negative edges</td>
+<td>Single Source</td>
+<td><span class="math">O(V · E)</span></td>
+<td>Detecting negative weight cycles</td>
+</tr>
+<tr>
+<td><strong>Floyd-Warshall</strong></td>
+<td>Arbitrary (<span class="math">N ≤ 400</span>)</td>
+<td>All-Pairs</td>
+<td><span class="math">O(V^3)</span></td>
+<td>Dense graphs, transitive closure</td>
+</tr>
+<tr>
+<td><strong>Kruskal (MST)</strong></td>
+<td>Undirected, weighted</td>
+<td>Min Spanning Tree</td>
+<td><span class="math">O(E log E)</span></td>
+<td>Connect all points with minimum wire/cost</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-universal-dijkstra-template-in-modern-c">2. Universal Dijkstra Template in Modern C++</h2>
+<h3 id="problem-network-delay-time-leetcode-742">Problem: Network Delay Time (LeetCode 742)</h3>
+<p>Find shortest time for signal to reach all nodes from source <span class="math">K</span>.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;climits&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// Returns shortest distances from source 'src' to all nodes (0-indexed)
+vector&lt;int&gt; dijkstra(int n, int src, const vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt;&amp; adj) {
+    // dist[i] = shortest known distance from src to i
+    vector&lt;int&gt; dist(n, INT_MAX);
+    dist[src] = 0;
+
+    // Min-heap storing {distance, node}
+    priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt; min_heap;
+    min_heap.push({0, src});
+
+    while (!min_heap.empty()) {
+        auto [d, u] = min_heap.top();
+        min_heap.pop();
+
+        // Stale distance check (skip outdated heap entries)
+        if (d &gt; dist[u]) continue;
+
+        for (const auto&amp; [v, weight] : adj[u]) {
+            if (dist[u] + weight &lt; dist[v]) {
+                dist[v] = dist[u] + weight;
+                min_heap.push({dist[v], v});
+            }
+        }
+    }
+
+    return dist;
+}
+</code></pre>
+<hr />
+<h2 id="3-kruskals-minimum-spanning-tree-mst-with-dsu">3. Kruskal's Minimum Spanning Tree (MST) with DSU</h2>
+<h3 id="core-intuition">Core Intuition:</h3>
+<ol>
+<li>Sort all edges in non-decreasing order of weight (<span class="math">O(E log E)</span>).</li>
+<li>Greedily pick edges using Disjoint Set Union (DSU) to avoid forming cycles.</li>
+<li>Stop when exactly <span class="math">V - 1</span> edges have been connected.</li>
+</ol>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+struct Edge {
+    int u, v, weight;
+    bool operator&lt;(const Edge&amp; other) const {
+        return weight &lt; other.weight;
+    }
+};
+
+class DSU {
+    vector&lt;int&gt; parent;
+public:
+    DSU(int n) {
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0);
+    }
+    int find(int i) {
+        return parent[i] == i ? i : parent[i] = find(parent[i]);
+    }
+    bool unite(int i, int j) {
+        int root_i = find(i), root_j = find(j);
+        if (root_i == root_j) return false;
+        parent[root_i] = root_j;
+        return true;
+    }
+};
+
+int kruskalMST(int n, vector&lt;Edge&gt;&amp; edges) {
+    sort(edges.begin(), edges.end()); // 1. Sort edges by weight
+
+    DSU dsu(n);
+    int total_weight = 0;
+    int edges_used = 0;
+
+    for (const auto&amp; edge : edges) {
+        if (dsu.unite(edge.u, edge.v)) {
+            total_weight += edge.weight;
+            edges_used++;
+            if (edges_used == n - 1) break; // MST complete
+        }
+    }
+
+    return (edges_used == n - 1) ? total_weight : -1; // -1 if disconnected
+}
+</code></pre>
+<hr />
+<h2 id="4-floyd-warshall-all-pairs-shortest-path-in-4-lines">4. Floyd-Warshall: All-Pairs Shortest Path in 4 Lines</h2>
+<p>When <span class="math">V ≤ 400</span> and you need distances between every pair of nodes:</p>
+<pre><code class="language-cpp">// dist[i][j] initialized with direct weights or INF
+for (int k = 0; k &lt; V; k++) {
+    for (int i = 0; i &lt; V; i++) {
+        for (int j = 0; j &lt; V; j++) {
+            if (dist[i][k] != INT_MAX &amp;&amp; dist[k][j] != INT_MAX) {
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+            }
+        }
+    }
+}
+</code></pre>
+<p><em>(Notice: Intermediate node <code>k</code> MUST be the outermost loop!)</em></p>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-11-dynamic-programming-the-human-way">Module 11: Dynamic Programming - The Human Way</h1>
+<blockquote>
+<p><em>"Dynamic Programming is simply exhaustive search with a memo pad. Never try to guess DP formulas from scratch; follow the 4-step state machine."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-4-step-human-dp-framework">1. The 4-Step Human DP Framework</h2>
+<p>Every DP problem in FAANG interviews yields to this systematic method:</p>
+<ol>
+<li><strong>State Definition:</strong> Write down in plain English what <code>dp[i]</code> (or <code>dp[i][j]</code>) actually represents.</li>
+<li><em>Example:</em> <code>dp[i]</code> = Maximum money robbed from the first <span class="math">i</span> houses without alerting police.</li>
+<li><strong>State Transition (Choice):</strong> What decisions can I make at step <span class="math">i</span>?</li>
+<li><em>Rob house <span class="math">i</span>:</em> Gain <code>nums[i]</code> + can only add <code>dp[i-2]</code>.</li>
+<li><em>Skip house <span class="math">i</span>:</em> Keep <code>dp[i-1]</code>.</li>
+<li><span class="math">⟹ dp[i] = \max(dp[i-1], nums[i] + dp[i-2])</span>.</li>
+<li><strong>Base Cases:</strong> What is the smallest trivially solvable subproblem?</li>
+<li><span class="math">dp[0] = nums[0]</span>, <span class="math">dp[1] = \max(nums[0], nums[1])</span>.</li>
+<li><strong>Space Optimization:</strong> Can I replace the full table with 2 variables?</li>
+</ol>
+<hr />
+<h2 id="2-1d-dp-with-o1-space-optimization-house-robber-leetcode-198">2. 1D DP with <span class="math">O(1)</span> Space Optimization: House Robber (LeetCode 198)</h2>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// Time: O(N), Space: O(1)
+int rob(const vector&lt;int&gt;&amp; nums) {
+    if (nums.empty()) return 0;
+    if (nums.size() == 1) return nums[0];
+
+    int prev2 = nums[0];
+    int prev1 = max(nums[0], nums[1]);
+
+    for (int i = 2; i &lt; nums.size(); i++) {
+        int current = max(prev1, nums[i] + prev2);
+        prev2 = prev1;
+        prev1 = current;
+    }
+
+    return prev1;
+}
+</code></pre>
+<hr />
+<h2 id="3-the-knapsack-family-01-vs-unbounded">3. The Knapsack Family (0/1 vs Unbounded)</h2>
+<h3 id="01-knapsack-each-item-can-be-picked-at-most-once">0/1 Knapsack (Each item can be picked AT MOST ONCE)</h3>
+<ul>
+<li><strong>Target:</strong> Subset Sum, Partition Equal Subset Sum (LeetCode 416).</li>
+<li><strong>Golden Rule:</strong> When space-optimizing to 1D array, <strong>iterate the capacity BACKWARDS</strong> (from <code>target</code> down to <code>num</code>) to avoid using the same item multiple times.</li>
+</ul>
+<pre><code class="language-cpp">bool canPartition(const vector&lt;int&gt;&amp; nums) {
+    int total_sum = 0;
+    for (int x : nums) total_sum += x;
+    if (total_sum % 2 != 0) return false;
+
+    int target = total_sum / 2;
+    vector&lt;bool&gt; dp(target + 1, false);
+    dp[0] = true; // Base case: 0 sum is always possible
+
+    for (int num : nums) {
+        // Iterate backwards for 0/1 Knapsack
+        for (int j = target; j &gt;= num; j--) {
+            dp[j] = dp[j] || dp[j - num];
+        }
+    }
+
+    return dp[target];
+}
+</code></pre>
+<h3 id="unbounded-knapsack-each-item-can-be-picked-infinite-times">Unbounded Knapsack (Each item can be picked INFINITE TIMES)</h3>
+<ul>
+<li><strong>Target:</strong> Coin Change (LeetCode 322).</li>
+<li><strong>Golden Rule:</strong> Iterate the capacity <strong>FORWARDS</strong> (from <code>coin</code> up to <code>amount</code>).</li>
+</ul>
+<pre><code class="language-cpp">int coinChange(const vector&lt;int&gt;&amp; coins, int amount) {
+    // Initialize with amount + 1 as infinity representation
+    vector&lt;int&gt; dp(amount + 1, amount + 1);
+    dp[0] = 0;
+
+    for (int coin : coins) {
+        // Iterate forwards for Unbounded Knapsack
+        for (int j = coin; j &lt;= amount; j++) {
+            dp[j] = min(dp[j], dp[j - coin] + 1);
+        }
+    }
+
+    return dp[amount] &gt; amount ? -1 : dp[amount];
+}
+</code></pre>
+<hr />
+<h2 id="4-2d-string-dp-longest-common-subsequence-lcs">4. 2D String DP: Longest Common Subsequence (LCS)</h2>
+<h3 id="transition-rule">Transition Rule:</h3>
+<ul>
+<li>If characters match (<code>s1[i-1] == s2[j-1]</code>): <span class="math">dp[i][j] = 1 + dp[i-1][j-1]</span></li>
+<li>If characters mismatch: <span class="math">dp[i][j] = \max(dp[i-1][j], dp[i][j-1])</span></li>
+</ul>
+<pre><code class="language-cpp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int longestCommonSubsequence(const string&amp; text1, const string&amp; text2) {
+    int m = text1.size(), n = text2.size();
+    vector&lt;vector&lt;int&gt;&gt; dp(m + 1, vector&lt;int&gt;(n + 1, 0));
+
+    for (int i = 1; i &lt;= m; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            if (text1[i - 1] == text2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+
+    return dp[m][n];
+}
+</code></pre>
+<hr />
+<h2 id="5-longest-increasing-subsequence-lis-on-log-n-patience-sort">5. Longest Increasing Subsequence (LIS): <span class="math">O(N log N)</span> Patience Sort</h2>
+<p>Standard DP takes <span class="math">O(N^2)</span>. Top-tier companies (Google, Meta) expect the <span class="math">O(N log N)</span> algorithm using <strong>Patience Sorting</strong> with <code>std::lower_bound</code>:</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// Time: O(N log N), Space: O(N)
+int lengthOfLIS(const vector&lt;int&gt;&amp; nums) {
+    vector&lt;int&gt; tails; // tails[i] stores smallest tail of all increasing subsequences of length i+1
+
+    for (int x : nums) {
+        auto it = lower_bound(tails.begin(), tails.end(), x);
+
+        if (it == tails.end()) {
+            // x is larger than all tails, extend the longest subsequence
+            tails.push_back(x);
+        } else {
+            // Replace the first element &gt;= x to keep tails as small as possible
+            *it = x;
+        }
+    }
+
+    return tails.size();
+}
+</code></pre>
+<p><em>(Memorize this technique: it appears in Russian Doll Envelopes, Box Stacking, and Longest Bitonic Subsequence!)</em></p>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-12-backtracking-state-space-search">Module 12: Backtracking &amp; State Space Search</h1>
+<blockquote>
+<p><em>"Backtracking is Depth-First Search on a virtual decision tree. The entire pattern comes down to three disciplined actions: Choose, Explore, Un-choose."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-universal-backtracking-skeleton">1. The Universal Backtracking Skeleton</h2>
+<pre><code class="language-cpp">void backtrack(State&amp; state, int start, vector&lt;Result&gt;&amp; all_results) {
+    if (isGoal(state)) {
+        all_results.push_back(state.format());
+        return;
+    }
+
+    for (int i = start; i &lt; candidates.size(); i++) {
+        if (!isValid(candidates[i])) continue; // 1. Prune dead branches early
+
+        state.choose(candidates[i]);           // 2. CHOOSE
+        backtrack(state, i + 1, all_results);  // 3. EXPLORE
+        state.unchoose(candidates[i]);         // 4. UN-CHOOSE (Revert state)
+    }
+}
+</code></pre>
+<hr />
+<h2 id="2-the-3-canonical-patterns">2. The 3 Canonical Patterns</h2>
+<h3 id="pattern-a-subsets-combinations-leetcode-78">Pattern A: Subsets / Combinations (LeetCode 78)</h3>
+<p>Order does not matter. Each element is either included or excluded.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+void generateSubsets(int start, const vector&lt;int&gt;&amp; nums, vector&lt;int&gt;&amp; current, vector&lt;vector&lt;int&gt;&gt;&amp; result) {
+    result.push_back(current); // Every intermediate state is a valid subset
+
+    for (int i = start; i &lt; nums.size(); i++) {
+        current.push_back(nums[i]);                  // Choose
+        generateSubsets(i + 1, nums, current, result); // Explore next elements
+        current.pop_back();                          // Un-choose
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; subsets(const vector&lt;int&gt;&amp; nums) {
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; current;
+    generateSubsets(0, nums, current, result);
+    return result;
+}
+</code></pre>
+<h3 id="pattern-b-subsets-with-duplicates-leetcode-90">Pattern B: Subsets with Duplicates (LeetCode 90)</h3>
+<p><strong>The Golden Pruning Rule:</strong> Sort first. If an element equals the previous element at the same recursion depth, <strong>skip it</strong> to prevent duplicate branches!</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void subsetsWithDupHelper(int start, const vector&lt;int&gt;&amp; nums, vector&lt;int&gt;&amp; current, vector&lt;vector&lt;int&gt;&gt;&amp; result) {
+    result.push_back(current);
+
+    for (int i = start; i &lt; nums.size(); i++) {
+        // Skip duplicate candidates at the current level
+        if (i &gt; start &amp;&amp; nums[i] == nums[i - 1]) continue;
+
+        current.push_back(nums[i]);
+        subsetsWithDupHelper(i + 1, nums, current, result);
+        current.pop_back();
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+    sort(nums.begin(), nums.end()); // Crucial sort
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; current;
+    subsetsWithDupHelper(0, nums, current, result);
+    return result;
+}
+</code></pre>
+<h3 id="pattern-c-permutations-leetcode-46">Pattern C: Permutations (LeetCode 46)</h3>
+<p>Order matters. In-place swapping avoids the memory overhead of a <code>visited</code> boolean array:</p>
+<pre><code class="language-cpp">void permuteHelper(int start, vector&lt;int&gt;&amp; nums, vector&lt;vector&lt;int&gt;&gt;&amp; result) {
+    if (start == nums.size()) {
+        result.push_back(nums);
+        return;
+    }
+
+    for (int i = start; i &lt; nums.size(); i++) {
+        swap(nums[start], nums[i]);       // Choose
+        permuteHelper(start + 1, nums, result); // Explore
+        swap(nums[start], nums[i]);       // Un-choose
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) {
+    vector&lt;vector&lt;int&gt;&gt; result;
+    permuteHelper(0, nums, result);
+    return result;
+}
+</code></pre>
+<hr />
+<h2 id="3-grid-backtracking-word-search-leetcode-79">3. Grid Backtracking: Word Search (LeetCode 79)</h2>
+<p>In-place character masking (<code>board[r][c] = '#'</code>) avoids allocating an <span class="math">O(M × N)</span> visited matrix:</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool existDfs(vector&lt;vector&lt;char&gt;&gt;&amp; board, int r, int c, const string&amp; word, int idx) {
+    if (idx == word.size()) return true; // Whole word matched!
+
+    if (r &lt; 0 || r &gt;= board.size() || c &lt; 0 || c &gt;= board[0].size() || board[r][c] != word[idx]) {
+        return false;
+    }
+
+    char original = board[r][c];
+    board[r][c] = '#'; // Mark as visited in-place
+
+    const int dr[4] = {-1, 1, 0, 0};
+    const int dc[4] = {0, 0, -1, 1};
+    bool found = false;
+
+    for (int d = 0; d &lt; 4; d++) {
+        if (existDfs(board, r + dr[d], c + dc[d], word, idx + 1)) {
+            found = true;
+            break;
+        }
+    }
+
+    board[r][c] = original; // Backtrack / un-choose
+    return found;
+}
+</code></pre>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-13-bit-manipulation-hacks">Module 13: Bit Manipulation Hacks</h1>
+<blockquote>
+<p><em>"Bit operations execute in a single CPU cycle (<span class="math">O(1)</span>). When an interviewer asks for zero auxiliary memory or constant-time arithmetic tricks, bit manipulation is your secret weapon."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-essential-bitwise-cheat-sheet">1. The Essential Bitwise Cheat Sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>C++ Code</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Check <span class="math">k</span>-th bit</strong></td>
+<td><code>(n &gt;&gt; k) &amp; 1</code></td>
+<td>Returns 1 if <span class="math">k</span>-th bit is set, else 0</td>
+</tr>
+<tr>
+<td><strong>Set <span class="math">k</span>-th bit</strong></td>
+<td><code>n |= (1 &lt;&lt; k)</code></td>
+<td>Turns <span class="math">k</span>-th bit ON</td>
+</tr>
+<tr>
+<td><strong>Clear <span class="math">k</span>-th bit</strong></td>
+<td><code>n &amp;= ~(1 &lt;&lt; k)</code></td>
+<td>Turns <span class="math">k</span>-th bit OFF</td>
+</tr>
+<tr>
+<td><strong>Toggle <span class="math">k</span>-th bit</strong></td>
+<td><code>n ^= (1 &lt;&lt; k)</code></td>
+<td>Flips <span class="math">k</span>-th bit (<span class="math">0 ≤ftrightarrow 1</span>)</td>
+</tr>
+<tr>
+<td><strong>Isolate lowest set bit</strong></td>
+<td><code>n &amp; (-n)</code></td>
+<td>Keeps only the rightmost 1-bit</td>
+</tr>
+<tr>
+<td><strong>Clear lowest set bit</strong></td>
+<td><code>n &amp; (n - 1)</code></td>
+<td>Removes the rightmost 1-bit</td>
+</tr>
+<tr>
+<td><strong>Is power of 2?</strong></td>
+<td><code>n &gt; 0 &amp;&amp; (n &amp; (n - 1)) == 0</code></td>
+<td>Powers of 2 have exactly one 1-bit</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-modern-c-built-in-intrinsics">2. Modern C++ Built-in Intrinsics</h2>
+<p>Top tech interviewers love candidates who know GCC/Clang built-ins because they compile directly into dedicated hardware CPU instructions (e.g., <code>POPCNT</code>):</p>
+<pre><code class="language-cpp">int x = 29; // binary: 11101
+
+// Count number of set bits (1s)
+int ones = __builtin_popcount(x);       // 4
+int ones_ll = __builtin_popcountll(1ULL &lt;&lt; 40); // For 64-bit integers
+
+// Count leading zeros
+int lz = __builtin_clz(x);
+
+// Count trailing zeros
+int tz = __builtin_ctz(x);
+</code></pre>
+<hr />
+<h2 id="3-high-yield-classic-single-number-iii-leetcode-260">3. High-Yield Classic: Single Number III (LeetCode 260)</h2>
+<h3 id="problem">Problem:</h3>
+<p>An array contains elements where every number appears twice except <strong>two distinct numbers</strong> which appear only once. Find the two numbers in <span class="math">O(N)</span> time and <span class="math">O(1)</span> space.</p>
+<h3 id="technique">Technique:</h3>
+<ol>
+<li>XOR all numbers. The result <span class="math">X = A ⊕ B</span>.</li>
+<li>Find any bit where <span class="math">A</span> and <span class="math">B</span> differ by isolating the lowest set bit of <span class="math">X</span>: <code>diff = X &amp; (-X)</code>.</li>
+<li>Partition numbers into two groups based on that bit and XOR independently.</li>
+</ol>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+// Time: O(N), Space: O(1)
+vector&lt;int&gt; singleNumber(const vector&lt;int&gt;&amp; nums) {
+    long long xor_sum = 0;
+    for (int x : nums) {
+        xor_sum ^= x;
+    }
+
+    // Isolate rightmost set bit (use long long to prevent -INT_MIN overflow)
+    long long diff_bit = xor_sum &amp; (-xor_sum);
+
+    int num1 = 0, num2 = 0;
+    for (int x : nums) {
+        if (x &amp; diff_bit) {
+            num1 ^= x; // Group 1
+        } else {
+            num2 ^= x; // Group 2
+        }
+    }
+
+    return {num1, num2};
+}
+</code></pre>
+<hr />
+<h2 id="4-bitmasks-as-sets-for-small-n-n-20">4. Bitmasks as Sets for Small <span class="math">N</span> (<span class="math">N ≤ 20</span>)</h2>
+<p>Instead of <code>std::unordered_set&lt;int&gt;</code> or <code>vector&lt;bool&gt;</code>, use a single 32-bit integer <code>int mask</code>:<br />
+- Add element <span class="math">i</span>: <code>mask |= (1 &lt;&lt; i)</code><br />
+- Remove element <span class="math">i</span>: <code>mask &amp;= ~(1 &lt;&lt; i)</code><br />
+- Check membership of <span class="math">i</span>: <code>(mask &amp; (1 &lt;&lt; i)) != 0</code><br />
+- Iterate over all subsets of a set:<br />
+<code>cpp
+  // Submask enumeration in O(3^N) total time
+  for (int submask = mask; submask &gt; 0; submask = (submask - 1) &amp; mask) {
+      // Process submask
+  }</code></p>
+            </section>
+            
+
+            <section class="chapter-section">
+                <h1 id="module-14-48-hour-emergency-cheat-sheet">Module 14: 48-Hour Emergency Cheat Sheet</h1>
+<blockquote>
+<p><em>"Keep this 2-page tear sheet on your phone or print it out 48 hours before your interview round. It condenses the most critical formulas, edge cases, and code templates."</em></p>
+</blockquote>
+<hr />
+<h2 id="1-the-10-second-pattern-recognition-matrix">⚡ 1. The 10-Second Pattern Recognition Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>If You See This Clue in the Problem</th>
+<th>Jump Directly to This Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contiguous subarray with sum / max / min / target condition</td>
+<td><strong>Sliding Window</strong> (if positive) or <strong>Prefix Sum + HashMap</strong> (if negative)</td>
+</tr>
+<tr>
+<td>Sorted array with search target or pair requirement</td>
+<td><strong>Binary Search</strong> (<span class="math">O(log N)</span>) or <strong>Two Pointers</strong> (<span class="math">O(N)</span>)</td>
+</tr>
+<tr>
+<td><em>"Find minimum possible maximum"</em> or <em>"Minimize max days/capacity"</em></td>
+<td><strong>Binary Search on Answer Space</strong></td>
+</tr>
+<tr>
+<td>Next greater / smaller element, daily temperatures, histograms</td>
+<td><strong>Monotonic Stack</strong> (Decreasing / Increasing)</td>
+</tr>
+<tr>
+<td>Continuous sliding window of size <span class="math">K</span> requiring max/min</td>
+<td><strong>Monotonic Deque</strong> (<span class="math">O(N)</span>)</td>
+</tr>
+<tr>
+<td>Top <span class="math">K</span> elements, running median, dynamic <span class="math">K</span> highest</td>
+<td><strong>Priority Queue / Min-Heap</strong></td>
+</tr>
+<tr>
+<td>Cycle detection in linked list or array traversal</td>
+<td><strong>Floyd's Fast &amp; Slow Pointers</strong></td>
+</tr>
+<tr>
+<td>Tree path with max sum / diameter / ancestor relationships</td>
+<td><strong>Post-Order Recursion (Tree DP)</strong></td>
+</tr>
+<tr>
+<td>Graph shortest moves with unweighted edges</td>
+<td><strong>Breadth-First Search (BFS)</strong></td>
+</tr>
+<tr>
+<td>Prerequisite ordering, compile sequence, dependency DAG</td>
+<td><strong>Topological Sort (Kahn's In-Degree BFS)</strong></td>
+</tr>
+<tr>
+<td>Network of roads/points with minimum connection cost</td>
+<td><strong>Kruskal's MST with Disjoint Set Union (DSU)</strong></td>
+</tr>
+<tr>
+<td>Distinct items with limited budget / capacity</td>
+<td><strong>0/1 Knapsack (Reverse iteration in 1D array)</strong></td>
+</tr>
+<tr>
+<td>Infinite quantity items with target sum</td>
+<td><strong>Unbounded Knapsack (Forward iteration in 1D array)</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-the-must-check-edge-cases-checklist">🛡️ 2. The Must-Check Edge Cases Checklist</h2>
+<p>Before saying <em>"I am done with my solution"</em>, dry-run your code through these 7 checkpoints:</p>
+<ul>
+<li>[ ] <strong>Empty or 1-element input:</strong> Does the code segfault when <code>nums.empty()</code> or <code>nums.size() == 1</code>?</li>
+<li>[ ] <strong>All duplicate elements:</strong> What happens when <code>nums = [2, 2, 2, 2]</code>?</li>
+<li>[ ] <strong>Negative numbers:</strong> Does your sliding window assume numbers are strictly positive?</li>
+<li>[ ] <strong>Integer overflow:</strong> Can <code>mid = (left + right) / 2</code> or cumulative sum exceed <span class="math">2 × 10^9</span>? Use <code>left + (right - left) / 2</code> and <code>long long</code>.</li>
+<li>[ ] <strong>Target not found:</strong> Does your binary search cleanly return <code>-1</code> without hanging in a loop?</li>
+<li>[ ] <strong>Disconnected graph:</strong> Can the graph have multiple components? Did you loop <code>for (int i = 0; i &lt; n; i++) if (!visited[i])</code>?</li>
+<li>[ ] <strong>Memory leaks in Linked Lists:</strong> Did you clean up or stack-allocate sentinel nodes (<code>ListNode dummy(0)</code>)?</li>
+</ul>
+<hr />
+<h2 id="3-c-stl-shortcuts-magic-one-liners">🚀 3. C++ STL Shortcuts &amp; Magic One-Liners</h2>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 1. Sum of all elements in array
+long long total = accumulate(nums.begin(), nums.end(), 0LL);
+
+// 2. Find min / max element and value
+int max_val = *max_element(nums.begin(), nums.end());
+int min_idx = min_element(nums.begin(), nums.end()) - nums.begin();
+
+// 3. Fill vector with sequential numbers: 0, 1, 2, ..., n-1
+iota(nums.begin(), nums.end(), 0);
+
+// 4. Reverse container in-place
+reverse(nums.begin(), nums.end());
+
+// 5. Remove duplicates from sorted vector
+nums.erase(unique(nums.begin(), nums.end()), nums.end());
+
+// 6. Binary Search lower_bound / upper_bound index
+int idx = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+
+// 7. Fast I/O (Crucial if platform runs strict time tests)
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+</code></pre>
+<hr />
+<h2 id="final-words-of-confidence">🏆 Final Words of Confidence</h2>
+<blockquote>
+<p><em>"Confidence in an interview comes from knowing you have a framework for any problem thrown at you. You don't need to know the answer in second 1. You only need to apply the 7 Pillars step-by-step. Breathe, communicate clearly, and write clean code."</em><br />
+— <strong>Vaibhav Pandey</strong></p>
+</blockquote>
+            </section>
+            
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.Prism) Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>
